@@ -1,0 +1,9 @@
+<app-nav-bar></app-nav-bar>
+<div class="usersContainer">
+  <h1>Quem está assistindo?</h1>
+  <app-user-list [users]="users" [edit]="edit"></app-user-list>
+  <div class="buttonProfile" [ngClass]="{'finishEditButton':edit}" (click)="toggleEdit()">
+    <button type="button" *ngIf="!edit"><span>Gerenciar perfis</span></button>
+    <button type="button" *ngIf="edit"><span>Concluído</span></button>
+  </div>
+</div>

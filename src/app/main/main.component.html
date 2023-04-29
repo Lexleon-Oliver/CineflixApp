@@ -1,0 +1,19 @@
+<div class="container">
+    <app-nav-bar-main (onSearch)="onSearch($event)"></app-nav-bar-main>
+    <app-rendereriza-filme [rota]="rota" (serieSelecionada)="onSerieSelected($event)" (filmeSelecionado)="onFilmeSelected($event)"></app-rendereriza-filme>
+    <div *ngIf="rota==='Séries' && !hasId" class="cardsDisplacement">
+        <app-category-carrousel [category]="'Séries'" [categoriasFilmes]="categoriasFilmes" [isCompleted]="true" [pesquisa]="pesquisa" [isSearchEnabled]="true"></app-category-carrousel>
+        <app-category-carrousel [category]="'Em andamento'" [categoriasFilmes]="categoriasFilmes" [isCompleted]="false"></app-category-carrousel>
+    </div>
+    <div *ngIf="(rota ==='Filmes' && !hasId)&& categoriasFilmes" class="cardsDisplacement">
+        <app-category-carrousel *ngFor="let categoria of categoriasFilmes" [category]="categoria" [categoriasFilmes]="categoriasFilmes" [pesquisa]="pesquisa" [isSearchEnabled]="true"></app-category-carrousel>
+    </div> 
+    <div *ngIf="serieSelecionada" class="cardsDisplacement">
+        <ng-container  *ngFor="let season of serieSelecionada.season">
+            <app-category-carrousel *ngIf="season" [category]="(season.numSeason | number: '1.0-0') + 'ª Temporada'" [seasonSelecionada]="season">
+            </app-category-carrousel>
+        </ng-container>
+    </div>
+
+
+</div>

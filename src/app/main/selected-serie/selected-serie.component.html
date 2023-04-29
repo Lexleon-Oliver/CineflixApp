@@ -1,0 +1,57 @@
+<div class="container filmeContainer" *ngIf="serie" [ngStyle]="{ 'background-image': 'url(' + serie.background+ ')', 'background-size': 'cover', 'background-position': 'center center' }">
+    <div class="overlay"></div>
+    <div class="containerMain">
+        <section class="containerImgName">
+            <h2 class="titleFilme">{{serie.nameBr}}</h2>
+        </section>
+        <section>
+            <div class="topBrasil">
+                <p class="topDez">
+                    TOP 10
+                </p>
+                <p class="topDez2">Lançamentos</p>
+            </div>
+            <div class="containerDescrip">
+                <p>
+                    {{serie.description}}
+                </p>
+                <app-estrelas [rating]="serie.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+
+                <div class="btnContainer">
+                    <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
+    
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+<div class="container filmeContainer" *ngIf="filme" [ngStyle]="{ 'background-image': 'url(' + filme.background+ ')', 'background-size': 'cover', 'background-position': 'center center' }">
+    <div class="overlay"></div>
+    <div class="containerMain">
+        <section class="containerImgName">
+            <h2 class="titleFilme">{{filme.nameBr}}</h2>
+        </section>
+        <section>
+            <div class="topBrasil">
+                <p class="topDez">
+                    TOP 10
+                </p>
+                <p class="topDez2">Lançamentos</p>
+            </div>
+            <div class="containerDescrip">
+                <p>
+                    {{filme.description}}
+                </p>
+                <app-estrelas [rating]="filme.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+
+                <div class="btnContainer">
+                    <button class="btn1"  (click)="abrirPlayer(filme)"><i class="fa-solid fa fa-play"></i><p>Assistir</p></button>
+                    <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
+    
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>

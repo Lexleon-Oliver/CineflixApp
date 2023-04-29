@@ -1,0 +1,134 @@
+<div *ngIf="serieObj">
+  <section class="series-image-wrapper">
+    <img
+      (click)="modalService.open('object-' + serieObj.id)"
+      [src]="serieObj.thumbnail"
+      id="test"
+      alt=""
+    />
+  </section>
+</div>
+<div *ngIf="episodeObj">
+  <section class="series-image-wrapper">
+    <h3 class="episode-title">{{ '0' + episodeObj.numEpisode+'- '+episodeObj.nameEpisode }}</h3>
+    <img
+      (click)="playEpisode(episodeObj)"
+      [src]="iconSeason"
+      id="test"
+      alt=""
+    />
+  </section>
+</div>
+<div *ngIf="filmeObj">
+  <section class="series-image-wrapper">
+    <img
+      (click)="modalService.open('object-' + filmeObj.id)"
+      [src]="filmeObj.thumbnail"
+      id="test"
+      alt=""
+    />
+  </section>
+</div>
+
+<jw-modal *ngIf="serieObj" id="{{ 'object-' + serieObj.id }}">
+  <div class="modal-top-side">
+    <button
+      class="modal-exit-btn"
+      (click)="modalService.close('object-' + serieObj.id)"
+    >
+      &#10005;
+    </button>
+    <button class="modal-watch-btn" (click)="assistirSerie()">&#9654;&nbsp; Assistir</button>
+    <img class="modal-img" [src]="serieObj.background" alt="" />
+    <h2 class="modal-title">{{serieObj.nameBr}}</h2>
+  </div>
+  <div class="modal-card">
+    <div class="modal-left-side">
+      <div class="modal-infos">
+        <div class="modal-infos-relevance">
+          {{getRelevance(serieObj.rating)}}
+        </div>
+        <div class="modal-infos-year" *ngIf="serieObj.year">
+          {{ serieObj.year }}
+        </div>
+        <div
+          class="modal-infos-minAge"
+          *ngIf="serieObj.minAge"
+          [ngClass]="{
+            'min-ageAll': serieObj.minAge < 13,
+            'min-age13': serieObj.minAge >= 13 && serieObj.minAge < 16,
+            'min-age16': serieObj.minAge >= 16 && serieObj.minAge < 18,
+            'min-age18': serieObj.minAge >= 18
+          }"
+        >
+          <p>{{ serieObj.minAge }}</p>
+        </div>
+        <div class="modal-infos-time" *ngIf="serieObj.time">
+          {{ secondsToHms(serieObj.time) }}
+        </div>
+      </div>
+      <div class="modal-description">
+        <div>{{ serieObj.description }}</div>
+      </div>
+    </div>
+    <div class="modal-details">
+      <div class="modal-details-item">
+        <div>
+          <span>Gênero:&nbsp;</span>
+          {{ serieObj.genre }}
+        </div>
+      </div>
+    </div>
+  </div>
+</jw-modal>
+<jw-modal *ngIf="filmeObj" id="{{ 'object-' + filmeObj.id }}">
+  <div class="modal-top-side">
+    <button
+      class="modal-exit-btn"
+      (click)="modalService.close('object-' + filmeObj.id)"
+    >
+      &#10005;
+    </button>
+    <button class="modal-watch-btn" (click)="assistirFilme()">&#9654;&nbsp; Assistir</button>
+    <img class="modal-img" [src]="filmeObj.background" alt="" />
+    <h2 class="modal-title">{{filmeObj.nameBr}}</h2>
+  </div>
+  <div class="modal-card">
+    <div class="modal-left-side">
+      <div class="modal-infos">
+        <div class="modal-infos-relevance">
+          {{getRelevance(filmeObj.rating)}}
+        </div>
+        <div class="modal-infos-year" *ngIf="filmeObj.year">
+          {{ filmeObj.year }}
+        </div>
+        <div
+          class="modal-infos-minAge"
+          *ngIf="filmeObj.minAge"
+          [ngClass]="{
+            'min-ageAll': filmeObj.minAge < 13,
+            'min-age13': filmeObj.minAge >= 13 && filmeObj.minAge < 16,
+            'min-age16': filmeObj.minAge >= 16 && filmeObj.minAge < 18,
+            'min-age18': filmeObj.minAge >= 18
+          }"
+        >
+          <p>{{ filmeObj.minAge }}</p>
+        </div>
+        <div class="modal-infos-time" *ngIf="filmeObj.time">
+          {{ secondsToHms(filmeObj.time) }}
+        </div>
+      </div>
+      <div class="modal-description">
+        <div>{{ filmeObj.description }}</div>
+      </div>
+    </div>
+    <div class="modal-details">
+      <div class="modal-details-item">
+        <div>
+          <span>Gênero:&nbsp;</span>
+          {{ filmeObj.genre }}
+        </div>
+      </div>
+    </div>
+  </div>
+</jw-modal>

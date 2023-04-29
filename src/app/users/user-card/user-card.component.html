@@ -1,0 +1,18 @@
+<div class="userContainer">
+
+  <div *ngIf="editing ">
+    <select [(ngModel)]="selectedAvatar" (ngModelChange)="updateAvatarUrl()">
+      <option *ngFor="let avatar of avatars" [value]="avatar.url">{{avatar.nome}}</option>
+    </select>        
+    <input type="text" [(ngModel)]="user.name">
+    <button (click)="saveChanges()">Salvar</button>
+    <button (click)="cancelEditing()">Cancelar</button>
+  </div>
+  <div *ngIf="!editing">
+  <div class="editOverlay" (click)="startEditing()" *ngIf="edit"></div>
+  <img class="editIcon" src="../../assets/images/pencil.png" alt="" *ngIf="edit">
+  <img class="avatarImg" src="{{ user.avatarUrl }}" alt="">
+  <p (click)="startEditing()">{{user.name}}</p>
+</div>
+
+</div>

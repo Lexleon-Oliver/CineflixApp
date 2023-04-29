@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>{{ category }}</h2>
+  <div *ngIf="!seasonSelecionada && !categoriasFilmes.includes(category)" class="wrapper">
+    <div *ngFor="let serie of seriesFiltradas">
+      <app-series-card
+        [serieObj]="serie"></app-series-card>
+    </div>
+  </div>
+  <div *ngIf="seasonSelecionada" class="wrapper">
+    <div *ngFor="let episode of seasonSelecionada.episode">
+      <app-series-card
+        [episodeObj]="episode" [iconSeason]="seasonSelecionada.seasonBack"></app-series-card>
+    </div>
+  </div>
+
+  <div *ngIf="!seasonSelecionada && categoriasFilmes.includes(category)" class="wrapper">
+    <div *ngFor="let filme of filmesFiltrados">
+      <app-series-card
+        [filmeObj]="filme"></app-series-card>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,27 @@
+<div class="Container" (window:scroll)="onWindowScroll($event)" [ngClass]="{'navBackgroundBlack': navBackground}">
+    <div class="hamburgerContainer" *ngIf="screenWidth <= 414; else nav">
+        <div>
+            <app-nav-bar-hamburger-menu [itens]="navButtons"></app-nav-bar-hamburger-menu>
+            <h2 class="brand__logo">CINEFLIX</h2>
+        </div>
+        <input type="text" placeholder="Buscar">
+    </div>
+    <ng-template #nav>
+        <div class="navContainer">
+            <div class="leftContainer">
+                <h2 class="brand__logo">CINEFLIX</h2>
+                <ul class="buttonsContainer">
+                    <li *ngFor="let item of navButtons.mainButtons" (click)="setSelectedMenu(item.text)"
+                    [ngClass]="{'selected': selectedMenu === item.text}"><app-nav-button [text]="item.text" [checked]="item.checked" [radioGroup]="'navButtons'"></app-nav-button></li>
+                </ul>
+            </div>
+            <div class="profileContainer">
+                <i class="fa-solid fa-plus fa-2xl" style="color: #ffffff;" (click)="onAdd()"></i>
+                <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput">
+                <i class="fa-solid fa-magnifying-glass fa-2xl" style="color: #ffffff;"(click)="onSearchClicked(searchInput)"></i>
+                <i class="fa-sharp fa-solid fa-bell fa-2xl" style="color: #ffffff;"></i>
+                <img class="avatarImg" src="{{userLogged.avatarUrl}}" alt="">
+            </div>
+        </div>
+    </ng-template>
+</div>
