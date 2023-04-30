@@ -18,6 +18,7 @@ export class RendererizaFilmeComponent implements OnInit {
   @Output() filmeSelecionado = new EventEmitter<Filme>();
 
   filmes: Filme[] = [];
+  todosFilmes: Filme[] = [];
   filme: Filme ;
   serie: Serie;
   series: Serie[] = [];
@@ -109,11 +110,7 @@ export class RendererizaFilmeComponent implements OnInit {
           this.onSerieSelected(this.serie);
         }, 500);
       }else if(this.rota === 'Filmes'){
-        this.appService.getFilmeById(this.id).subscribe(filme =>{
-          this.filme=filme;
-        }, error => {
-          console.log(error);
-        });
+        this.getFilme(this.id);
         setTimeout(()=>{
           this.onFilmeSelected(this.filme);
         },500);
@@ -322,6 +319,38 @@ export class RendererizaFilmeComponent implements OnInit {
         this.getSeries(page + 1);
       }else{
         localStorage.setItem('CineflixSeries',JSON.stringify(this.series));
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+
+  getFilme(id: number) {
+    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixFilmes')){
+      this.getFilmes(0);
+    }else{
+      this.todosFilmes= JSON.parse(localStorage.getItem('CineflixFilmes'));
+    }
+    try{
+      this.filme = this.todosFilmes.find(f => f.id === id);
+      console.log("this.filme: ",this.filme)
+    }catch{
+      this.appService.getFilmeById(this.id).subscribe(filme => {
+        this.filme= filme;
+      }, error => {
+        console.log(error);
+      });
+    }
+  }
+
+  getFilmes(page: number){
+    this.appService.getFilmes(page).subscribe(filmes => {
+      if (filmes.length > 0) {
+        this.todosFilmes = [...this.todosFilmes, ...filmes];
+        this.getFilmes(page + 1);
+      }else{
+        localStorage.setItem('CineflixFilmes',JSON.stringify(this.todosFilmes));
       }
     }, error => {
       console.log(error);
