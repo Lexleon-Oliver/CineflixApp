@@ -30,64 +30,40 @@ export class CategoryCarrouselComponent implements OnInit {
   constructor(private appService:AppService) { }
 
 
-  getSeries(page: number): void {
-    this.appService.getSeries(page).subscribe(series => {
-      if (series.length > 0) {
-        this.series = [...this.series, ...series];
-        this.getSeries(page + 1);
-      }
-    }, error => {
-      console.log(error);
-    });
+  getSeries(): void {
+    this.series= JSON.parse(localStorage.getItem('CineflixSeries'));
   }
 
-  async getFilmes(): Promise<void> {
-    const loadedPages = new Set<number>();
-    let currentPage = 0;
-    while (!loadedPages.has(currentPage)) {
-      loadedPages.add(currentPage);
-      try {
-        console.log("Pagina: ",currentPage)
-        const filmes = await this.appService.getFilmes(currentPage).toPromise();
-        if (filmes.length > 0) {
-          this.filmes = [...this.filmes, ...filmes];
-          currentPage++;
-        } else {
-          break;
-        }
-      } catch (error) {
-        console.log(error);
-        break;
-      }
-    }
+  getFilmes():void {
+    this.filmes= JSON.parse(localStorage.getItem('CineflixFilmes'));
   }
 
-  getNovidades(page: number){
-    this.appService.getCategoriaNovidade(page).subscribe(filmes => {
-      if (filmes.length > 0) {
-        this.novidades = [...this.novidades, ...filmes];
-        this.getNovidades(page + 1);
-      }
-    }, error => {
-      console.log(error);
-    });
+  getNovidades(){
+    this.novidades= JSON.parse(localStorage.getItem('CineflixNovidades'));
   }
 
   getUltimos(){
-    this.appService.getUltimosAdicionados().subscribe((filmes: Filme[]) => {
-      this.ultimos = filmes;
-    });
+    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixRecentes')){
+      this.appService.getUltimosAdicionados().subscribe((filmes: Filme[]) => {
+        this.ultimos = filmes;
+      });
+      setTimeout(() => {
+        localStorage.setItem('CineflixRecentes',JSON.stringify(this.ultimos));
+      }, 2000);
+    }else{
+      this.ultimos = JSON.parse(localStorage.getItem('CineflixRecentes'));
+    }
   }
 
 
   ngOnInit(): void {
-    this.getNovidades(0);
+    this.getNovidades();
     this.getUltimos();
-    this.getSeries(0);
+    this.getSeries();
     this.getFilmes();
     setTimeout(() => {
       this.filterSeries();
-    }, 1000); // Espera 1 segundo antes de chamar filterSeries
+    }, 2000); // Espera 1 segundo antes de chamar filterSeries
     setTimeout(() => {
       this.filterFilmes();
     }, 2000); // Espera 2 segundo antes de chamar filterFilmes
