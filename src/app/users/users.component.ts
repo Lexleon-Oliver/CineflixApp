@@ -44,6 +44,12 @@ export class UsersComponent implements OnInit {
         if(usuarioArmazenado){
           if (dataAtualizacaoFilme !== usuarioArmazenado.moviesLastModified || dataAtualizacaoSerie!== usuarioArmazenado.seriesLastModified){
             this.userService.saveToLocalStorage(this.users);
+            if(dataAtualizacaoFilme !== usuarioArmazenado.moviesLastModified){
+              localStorage.setItem('cineflixAtualizaFilme', 'true');
+            }
+            if(dataAtualizacaoSerie!== usuarioArmazenado.seriesLastModified){
+              localStorage.setItem('cineflixAtualizaSerie', 'true');
+            }
           }
           if (user.name !== usuarioArmazenado.name || user.avatarUrl !== usuarioArmazenado.avatarUrl){
             this.userService.saveToLocalStorage(this.users);
