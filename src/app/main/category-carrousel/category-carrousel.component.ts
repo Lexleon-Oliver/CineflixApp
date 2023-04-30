@@ -43,16 +43,7 @@ export class CategoryCarrouselComponent implements OnInit {
   }
 
   getUltimos(){
-    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixRecentes')){
-      this.appService.getUltimosAdicionados().subscribe((filmes: Filme[]) => {
-        this.ultimos = filmes;
-      });
-      setTimeout(() => {
-        localStorage.setItem('CineflixRecentes',JSON.stringify(this.ultimos));
-      }, 2000);
-    }else{
       this.ultimos = JSON.parse(localStorage.getItem('CineflixRecentes'));
-    }
   }
 
 

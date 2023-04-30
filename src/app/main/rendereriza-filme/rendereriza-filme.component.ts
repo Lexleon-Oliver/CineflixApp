@@ -40,6 +40,7 @@ export class RendererizaFilmeComponent implements OnInit {
       this.id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
     this.getSeries(0);
+    this.getFilmes(0);
     this.renderizaMidia();
   }
 
@@ -206,21 +207,23 @@ export class RendererizaFilmeComponent implements OnInit {
         this.serie.thumbnail = this.filme.thumbnail;
         this.serie.time = this.filme.time;
         this.serie.year =this.filme.year;
-        if (this.temporada.id===0){
-          this.appService.cadastrarTemporada(this.temporada).subscribe(
-            (response) =>{
-              let newResponse: any;
-              newResponse =response;
-              let message = newResponse.message; // "Created season with ID 12345"
-              let idStartIndex = message.indexOf("ID") + 3; // índice do primeiro dígito do ID
-              let id = message.substring(idStartIndex); // extrai a substring a partir do índice encontrado
-              this.temporada.id = id;
-              this.serie.season.push(this.temporada)
-            },
-            (error) => {
-              console.error('Erro ao cadastrar temporada:', error);
-            }
-          );
+        if (this.temporada){
+          if (this.temporada.id===0){
+            this.appService.cadastrarTemporada(this.temporada).subscribe(
+              (response) =>{
+                let newResponse: any;
+                newResponse =response;
+                let message = newResponse.message; // "Created season with ID 12345"
+                let idStartIndex = message.indexOf("ID") + 3; // índice do primeiro dígito do ID
+                let id = message.substring(idStartIndex); // extrai a substring a partir do índice encontrado
+                this.temporada.id = id;
+                this.serie.season.push(this.temporada)
+              },
+              (error) => {
+                console.error('Erro ao cadastrar temporada:', error);
+              }
+            );
+          }
         }
         if(this.episodio.id ===0){
           this.appService.cadastrarEpisodio(this.episodio).subscribe(
@@ -321,6 +324,7 @@ export class RendererizaFilmeComponent implements OnInit {
           this.getSeries(page + 1);
         }else{
           localStorage.setItem('CineflixSeries',JSON.stringify(this.series));
+          localStorage.removeItem('cineflixAtualizaSerie')
         }
       }, error => {
         console.log(error);
@@ -349,18 +353,21 @@ export class RendererizaFilmeComponent implements OnInit {
   }
 
   getFilmes(page: number){
-    this.appService.getFilmes(page).subscribe(filmes => {
-      if (filmes.length > 0) {
-        this.todosFilmes = [...this.todosFilmes, ...filmes];
-        this.getFilmes(page + 1);
-      }else{
-        localStorage.setItem('CineflixFilmes',JSON.stringify(this.todosFilmes));
-      }
-    }, error => {
-      console.log(error);
-    });
+    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixFilmes')){
+      this.appService.getFilmes(page).subscribe(filmes => {
+        if (filmes.length > 0) {
+          this.todosFilmes = [...this.todosFilmes, ...filmes];
+          this.getFilmes(page + 1);
+        }else{
+          localStorage.setItem('CineflixFilmes',JSON.stringify(this.todosFilmes));
+        }
+      }, error => {
+        console.log(error);
+      });
+    }else{
+      this.todosFilmes= JSON.parse(localStorage.getItem('CineflixFilmes'));
+    }
   }
-
 
 
 }

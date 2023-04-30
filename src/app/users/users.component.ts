@@ -35,6 +35,9 @@ export class UsersComponent implements OnInit {
 
   private setUser(user:UsersResponse) {
     this.users=user.users;
+    if (sessionStorage.getItem('cineflixAtualizaFilme')||sessionStorage.getItem('cineflixAtualizaSerie')) {
+      sessionStorage.clear();
+    }
     if (localStorage.getItem('cineflixUsers')) {
       this.users.forEach(user => {
         const dataAtualizacaoSerie = user.seriesLastModified;
