@@ -45,6 +45,9 @@ export class UsersComponent implements OnInit {
           if (dataAtualizacaoFilme !== usuarioArmazenado.moviesLastModified || dataAtualizacaoSerie!== usuarioArmazenado.seriesLastModified){
             this.userService.saveToLocalStorage(this.users);
           }
+          if (user.name !== usuarioArmazenado.name || user.avatarUrl !== usuarioArmazenado.avatarUrl){
+            this.userService.saveToLocalStorage(this.users);
+          }
         }
       });
 
