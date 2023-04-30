@@ -17,9 +17,10 @@ export class RendererizaFilmeComponent implements OnInit {
   @Output() serieSelecionada = new EventEmitter<Serie>();
   @Output() filmeSelecionado = new EventEmitter<Filme>();
 
-  filmes: Filme[] = []; 
+  filmes: Filme[] = [];
   filme: Filme ;
   serie: Serie;
+  series: Serie[] = [];
   temporada:Season;
   idTemp: number =0;
   idEpisode: number =0;
@@ -75,7 +76,7 @@ export class RendererizaFilmeComponent implements OnInit {
           }
         );
       }
-      
+
     }
   }
 
@@ -99,11 +100,7 @@ export class RendererizaFilmeComponent implements OnInit {
         this.getNovidade(0);
       }else if(this.rota === 'Séries'){
         this.ocultaBotaoAssistir=true;
-        this.appService.getSerieById(this.id).subscribe(serie => {
-          this.serie = serie;
-        }, error => {
-          console.log(error);
-        });
+        this.getSerie(this.id);
         setTimeout(() => {
           this.filme=new Filme(this.id,this.serie.name,this.serie.nameBr,
             this.serie.year,this.serie.description,this.serie.thumbnail,
@@ -140,17 +137,26 @@ export class RendererizaFilmeComponent implements OnInit {
   }
 
   getNovidade(page: number){
-    this.appService.getCategoriaNovidade(page).subscribe(filmes => {
-      if (filmes.length > 0) {
-        this.filmes = [...this.filmes, ...filmes];
-        this.getNovidade(page + 1);
-      }else{
-        const randomIndex = Math.floor(Math.random() * this.filmes.length);
-        this.filme = this.filmes[randomIndex];
-      }
-    }, error => {
-      console.log(error);
-    });   
+    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixNovidades')){
+      this.appService.getCategoriaNovidade(page).subscribe(filmes => {
+        if (filmes.length > 0) {
+          this.filmes = [...this.filmes, ...filmes];
+          this.getNovidade(page + 1);
+        }else{
+          const randomIndex = Math.floor(Math.random() * this.filmes.length);
+          this.filme = this.filmes[randomIndex];
+          localStorage.setItem('CineflixNovidades',JSON.stringify(this.filmes));
+        }
+      }, error => {
+        console.log(error);
+      });
+    }else if(localStorage.getItem('CineflixNovidades')){
+      // console.log("localStorage",JSON.parse(localStorage.getItem('CineflixNovidades')) )
+       this.filmes= JSON.parse(localStorage.getItem('CineflixNovidades'));
+       const randomIndex = Math.floor(Math.random() * this.filmes.length);
+          this.filme = this.filmes[randomIndex];
+          localStorage.setItem('CineflixNovidades',JSON.stringify(this.filmes));
+    }
   }
 
   onSerieSelected(serie: Serie) {
@@ -164,7 +170,7 @@ export class RendererizaFilmeComponent implements OnInit {
   onSeasonSelected() {
     if (this.idTemp) {
       this.serie.season.forEach(temporada =>{
-  
+
         if (temporada.id==this.idTemp){
           this.temporada = temporada;
         }
@@ -172,7 +178,7 @@ export class RendererizaFilmeComponent implements OnInit {
     }else{
     this.temporada = new Season(0,0,this.serie.id,"",[]);
     }
-    
+
   }
 
   onEpisodeSelected() {
@@ -223,9 +229,9 @@ export class RendererizaFilmeComponent implements OnInit {
             (response) =>{
               let newResponse: any;
               newResponse =response;
-              let message = newResponse.message; 
-              let idStartIndex = message.indexOf("ID") + 3; 
-              let id = message.substring(idStartIndex); 
+              let message = newResponse.message;
+              let idStartIndex = message.indexOf("ID") + 3;
+              let id = message.substring(idStartIndex);
               this.episodio.id = id;
               this.temporada.episode.push(this.episodio)
             },
@@ -292,6 +298,38 @@ export class RendererizaFilmeComponent implements OnInit {
     this.modoEdicao=true;
   }
 
-  
+   getSerie(id: number) {
+    if(sessionStorage.getItem('cineflixAtualizaSerie') || !localStorage.getItem('CineflixSeries')){
+      this.getSeries(0);
+    }else{
+      this.series= JSON.parse(localStorage.getItem('CineflixSeries'));
+    }
+    try{
+      this.serie = this.series.find(f => f.id === id);
+    }catch{
+      this.appService.getSerieById(this.id).subscribe(serie => {
+        this.serie = serie;
+      }, error => {
+        console.log(error);
+      });
+    }
+  }
+
+  getSeries(page: number){
+    this.appService.getSeries(page).subscribe(series => {
+      if (series.length > 0) {
+        this.series = [...this.series, ...series];
+        this.getSeries(page + 1);
+      }else{
+        localStorage.setItem('CineflixSeries',JSON.stringify(this.series));
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+
 
 }
+
+
