@@ -39,6 +39,7 @@ export class RendererizaFilmeComponent implements OnInit {
     if(this.route.snapshot.paramMap.get('id')){
       this.id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
+    this.getSeries(0);
     this.renderizaMidia();
   }
 
@@ -313,18 +314,21 @@ export class RendererizaFilmeComponent implements OnInit {
   }
 
   getSeries(page: number){
-    this.appService.getSeries(page).subscribe(series => {
-      if (series.length > 0) {
-        this.series = [...this.series, ...series];
-        this.getSeries(page + 1);
-      }else{
-        localStorage.setItem('CineflixSeries',JSON.stringify(this.series));
-      }
-    }, error => {
-      console.log(error);
-    });
+    if(sessionStorage.getItem('cineflixAtualizaSerie') || !localStorage.getItem('CineflixSeries')){
+      this.appService.getSeries(page).subscribe(series => {
+        if (series.length > 0) {
+          this.series = [...this.series, ...series];
+          this.getSeries(page + 1);
+        }else{
+          localStorage.setItem('CineflixSeries',JSON.stringify(this.series));
+        }
+      }, error => {
+        console.log(error);
+      });
+    }else{
+      this.series= JSON.parse(localStorage.getItem('CineflixSeries'));
+    }
   }
-
 
   getFilme(id: number) {
     if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixFilmes')){
