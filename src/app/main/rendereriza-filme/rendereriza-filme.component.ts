@@ -30,10 +30,21 @@ export class RendererizaFilmeComponent implements OnInit {
   id:number = 0;
   ocultaBotaoAssistir: boolean=false;
   modoEdicao: boolean= false;
+  os:string;
+
 
   constructor( private route: ActivatedRoute,
     private appService: AppService,
-    private router: Router) { }
+    private router: Router) {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      if (/windows/.test(userAgent)) {
+        this.os = 'Windows';
+      } else if (/linux/.test(userAgent)) {
+        this.os = 'Linux';
+      } else {
+        this.os = 'Desconhecido';
+      }
+     }
 
   ngOnInit(): void {
     if(this.route.snapshot.paramMap.get('id')){
@@ -42,6 +53,8 @@ export class RendererizaFilmeComponent implements OnInit {
     this.getSeries(0);
     this.getFilmes(0);
     this.renderizaMidia();
+    console.log("Sistema: ", this.os);
+
   }
 
   abrirPlayer(filme: Filme): void {
@@ -207,6 +220,7 @@ export class RendererizaFilmeComponent implements OnInit {
         this.serie.thumbnail = this.filme.thumbnail;
         this.serie.time = this.filme.time;
         this.serie.year =this.filme.year;
+        console.log(this.serie.completed);
         if (this.temporada){
           if (this.temporada.id===0){
             this.appService.cadastrarTemporada(this.temporada).subscribe(
@@ -225,21 +239,23 @@ export class RendererizaFilmeComponent implements OnInit {
             );
           }
         }
-        if(this.episodio.id ===0){
-          this.appService.cadastrarEpisodio(this.episodio).subscribe(
-            (response) =>{
-              let newResponse: any;
-              newResponse =response;
-              let message = newResponse.message;
-              let idStartIndex = message.indexOf("ID") + 3;
-              let id = message.substring(idStartIndex);
-              this.episodio.id = id;
-              this.temporada.episode.push(this.episodio)
-            },
-            (error) => {
-              console.error('Erro ao cadastrar temporada:', error);
-            }
-          );
+        if (this.episodio) {
+          if(this.episodio.id ===0){
+            this.appService.cadastrarEpisodio(this.episodio).subscribe(
+              (response) =>{
+                let newResponse: any;
+                newResponse =response;
+                let message = newResponse.message;
+                let idStartIndex = message.indexOf("ID") + 3;
+                let id = message.substring(idStartIndex);
+                this.episodio.id = id;
+                this.temporada.episode.push(this.episodio)
+              },
+              (error) => {
+                console.error('Erro ao cadastrar episódio:', error);
+              }
+            );
+          }
         }
         this.appService.atualizarSerie(this.serie).subscribe(
           (response) => {
@@ -249,10 +265,9 @@ export class RendererizaFilmeComponent implements OnInit {
             console.error('Erro ao atualizar série:', error);
           }
         );
-      }
-      this.router.navigate(['series']);
-    }else{
-      if(this.filme.id!==0){
+        this.router.navigate(['series']);
+      }else{
+        if(this.filme.id!==0){
         this.appService.atualizarFilme(this.filme).subscribe(
           (response) => {
             console.log('Filme atualizado com sucesso:', response);
@@ -263,7 +278,7 @@ export class RendererizaFilmeComponent implements OnInit {
             // Exiba a mensagem de erro para o usuário
           }
         );
-      }else{
+        }else{
         this.appService.cadastrarFilme(this.filme).subscribe(
           (response) => {
             console.log('Filme cadastrado com sucesso:', response);
@@ -274,8 +289,9 @@ export class RendererizaFilmeComponent implements OnInit {
             // Exiba a mensagem de erro para o usuário
           }
         );
+        }
+      this.router.navigate(['filmes']);
       }
-    this.router.navigate(['filmes']);
     }
   }
 
