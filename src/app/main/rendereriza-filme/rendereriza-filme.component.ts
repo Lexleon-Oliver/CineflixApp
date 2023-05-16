@@ -123,6 +123,8 @@ export class RendererizaFilmeComponent implements OnInit {
             this.serie.background,null,this.serie.genre,
             this.serie.rating,this.serie.minAge,this.serie.time);
           this.onSerieSelected(this.serie);
+          console.log("This serie: " + this.serie);
+          console.log("This movieRenderizado: " + this.filme);
         }, 500);
       }else if(this.rota === 'Filmes'){
         this.getFilme(this.id);
@@ -220,7 +222,6 @@ export class RendererizaFilmeComponent implements OnInit {
         this.serie.thumbnail = this.filme.thumbnail;
         this.serie.time = this.filme.time;
         this.serie.year =this.filme.year;
-        console.log(this.serie.completed);
         if (this.temporada){
           if (this.temporada.id===0){
             this.appService.cadastrarTemporada(this.temporada).subscribe(
@@ -239,6 +240,7 @@ export class RendererizaFilmeComponent implements OnInit {
             );
           }
         }
+      }
         if (this.episodio) {
           if(this.episodio.id ===0){
             this.appService.cadastrarEpisodio(this.episodio).subscribe(
@@ -266,8 +268,8 @@ export class RendererizaFilmeComponent implements OnInit {
           }
         );
         this.router.navigate(['series']);
-      }else{
-        if(this.filme.id!==0){
+    }else{
+      if(this.filme.id!==0){
         this.appService.atualizarFilme(this.filme).subscribe(
           (response) => {
             console.log('Filme atualizado com sucesso:', response);
@@ -278,7 +280,7 @@ export class RendererizaFilmeComponent implements OnInit {
             // Exiba a mensagem de erro para o usuário
           }
         );
-        }else{
+      }else{
         this.appService.cadastrarFilme(this.filme).subscribe(
           (response) => {
             console.log('Filme cadastrado com sucesso:', response);
@@ -289,10 +291,10 @@ export class RendererizaFilmeComponent implements OnInit {
             // Exiba a mensagem de erro para o usuário
           }
         );
-        }
-      this.router.navigate(['filmes']);
       }
+      this.router.navigate(['filmes']);
     }
+
   }
 
   remover(){
@@ -323,6 +325,7 @@ export class RendererizaFilmeComponent implements OnInit {
     }
     try{
       this.serie = this.series.find(f => f.id === id);
+      console.log("this.serie:", this.serie);
     }catch{
       this.appService.getSerieById(this.id).subscribe(serie => {
         this.serie = serie;
