@@ -34,26 +34,49 @@ export class CategoryCarrouselComponent implements OnInit {
     this.series= JSON.parse(localStorage.getItem('CineflixSeries'));
   }
 
-  getFilmes():void {
-    this.filmes= JSON.parse(localStorage.getItem('CineflixFilmes'));
-  }
-
-  getNovidades(){
-    this.novidades= JSON.parse(localStorage.getItem('CineflixNovidades'));
-  }
-
-  getUltimos(){
-    if(sessionStorage.getItem('cineflixAtualizaFilme')||!localStorage.getItem('CineflixRecentes') ){
-
-      this.appService.getUltimosAdicionados().subscribe(ultimos => {
-        this.ultimos = ultimos;
-
+  getFilmes(page: number){
+    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixFilmes')){
+      this.appService.getFilmes(page).subscribe(filmes => {
+        if (filmes.length > 0) {
+          this.filmes = [...this.filmes, ...filmes];
+          this.getFilmes(page + 1);
+        }else{
+          localStorage.setItem('CineflixFilmes',JSON.stringify(this.filmes));
+        }
       }, error => {
         console.log(error);
       });
-      setTimeout(() =>{
+    }else{
+      this.filmes= JSON.parse(localStorage.getItem('CineflixFilmes'));
+    }
+  }
+
+  getNovidades(page: number){
+
+    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixNovidades')){
+      this.appService.getCategoriaNovidade(page).subscribe(filmes => {
+        if (filmes.length > 0) {
+          this.novidades = [...this.novidades, ...filmes];
+          this.getNovidades(page + 1);
+        }else{
+          localStorage.setItem('CineflixNovidades',JSON.stringify(this.filmes));
+        }
+      }, error => {
+        console.log(error);
+      });
+  }else{
+    this.novidades= JSON.parse(localStorage.getItem('CineflixNovidades'));
+  }
+}
+
+  getUltimos(){
+    if(sessionStorage.getItem('cineflixAtualizaFilme')||!localStorage.getItem('CineflixRecentes') ){
+      this.appService.getUltimosAdicionados().subscribe(ultimos => {
+        this.ultimos = ultimos;
         localStorage.setItem('CineflixRecentes',JSON.stringify(this.ultimos));
-      },2000);
+      }, error => {
+        console.log(error);
+      });
 
     }else{
       this.ultimos = JSON.parse(localStorage.getItem('CineflixRecentes'));
@@ -64,10 +87,10 @@ export class CategoryCarrouselComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getNovidades();
+    this.getNovidades(0);
     this.getUltimos();
     this.getSeries();
-    this.getFilmes();
+    this.getFilmes(0);
     setTimeout(() => {
       this.filterSeries();
     }, 2000); // Espera 1 segundo antes de chamar filterSeries

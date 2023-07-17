@@ -111,6 +111,7 @@ export class RendererizaFilmeComponent implements OnInit {
   }
 
   renderizaMidia(){
+    console.log("id: " + this.id);
     if(this.id!==0){
       if(this.rota === 'Início'){
         this.getNovidade(0);
@@ -274,6 +275,10 @@ export class RendererizaFilmeComponent implements OnInit {
           (response) => {
             console.log('Filme atualizado com sucesso:', response);
             // Exiba a mensagem de sucesso para o usuário
+            localStorage.removeItem("CineflixFilmes");
+          localStorage.removeItem("CineflixNovidades");
+          localStorage.removeItem("CineflixRecentes");
+          console.log("CineflixFilmes,CineflixNovidades,CineflixRecentes removidos de LocalStorage");
           },
           (error) => {
             console.error('Erro ao atualizar filme:', error);
@@ -284,7 +289,10 @@ export class RendererizaFilmeComponent implements OnInit {
         this.appService.cadastrarFilme(this.filme).subscribe(
           (response) => {
             console.log('Filme cadastrado com sucesso:', response);
-            // Exiba a mensagem de sucesso para o usuário
+            localStorage.removeItem("CineflixFilmes");
+            localStorage.removeItem("CineflixNovidades");
+            localStorage.removeItem("CineflixRecentes");
+            console.log("CineflixFilmes,CineflixNovidades,CineflixRecentes removidos de LocalStorage");
           },
           (error) => {
             console.error('Erro ao cadastrar filme:', error);
@@ -303,6 +311,10 @@ export class RendererizaFilmeComponent implements OnInit {
         (response) => {
           console.log('Filme removido com sucesso:', response);
           // Exiba a mensagem de sucesso para o usuário
+          localStorage.removeItem("CineflixFilmes");
+          localStorage.removeItem("CineflixNovidades");
+          localStorage.removeItem("CineflixRecentes");
+          console.log("CineflixFilmes,CineflixNovidades,CineflixRecentes removidos de LocalStorage");
         },
         (error) => {
           console.error('Erro ao remover filme:', error);
@@ -361,7 +373,15 @@ export class RendererizaFilmeComponent implements OnInit {
     }
     try{
       this.filme = this.todosFilmes.find(f => f.id === id);
-      console.log("this.filme: ",this.filme)
+      console.log("this.filme: ",this.filme);
+      if (typeof this.filme === 'undefined') {
+        this.appService.getFilmeById(this.id).subscribe(filme => {
+          this.filme= filme;
+          console.log('buscado em appService.getFilmeById')
+        }, error => {
+          console.log(error);
+        });
+      }
     }catch{
       this.appService.getFilmeById(this.id).subscribe(filme => {
         this.filme= filme;
