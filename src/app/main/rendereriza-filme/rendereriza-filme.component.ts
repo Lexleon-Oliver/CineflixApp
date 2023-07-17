@@ -366,29 +366,11 @@ export class RendererizaFilmeComponent implements OnInit {
   }
 
   getFilme(id: number) {
-    if(sessionStorage.getItem('cineflixAtualizaFilme') || !localStorage.getItem('CineflixFilmes')){
-      this.getFilmes(0);
-    }else{
-      this.todosFilmes= JSON.parse(localStorage.getItem('CineflixFilmes'));
-    }
-    try{
-      this.filme = this.todosFilmes.find(f => f.id === id);
-      console.log("this.filme: ",this.filme);
-      if (typeof this.filme === 'undefined') {
-        this.appService.getFilmeById(this.id).subscribe(filme => {
-          this.filme= filme;
-          console.log('buscado em appService.getFilmeById')
-        }, error => {
-          console.log(error);
-        });
-      }
-    }catch{
-      this.appService.getFilmeById(this.id).subscribe(filme => {
-        this.filme= filme;
-      }, error => {
-        console.log(error);
-      });
-    }
+    this.appService.getFilmeById(this.id).subscribe(filme => {
+      this.filme= filme;
+    }, error => {
+      console.log(error);
+    });
   }
 
   getFilmes(page: number){
