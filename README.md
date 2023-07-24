@@ -1,6 +1,6 @@
 # Cineflix App - Catálogo Digital de Filmes e Séries
 
-![Cineflix App]([https://link-to-your-image](https://drive.google.com/file/d/1d8_NIJ_YJfgpr_iU1wW9eD2-JZ2cCX7B/view?usp=sharing))
+![Cineflix App](https://drive.google.com/file/d/1d8_NIJ_YJfgpr_iU1wW9eD2-JZ2cCX7B/view?usp=sharing)
 
 ## Descrição do Projeto
 
