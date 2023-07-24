@@ -30,17 +30,25 @@ git clone https://github.com/Lexleon-Oliver/CineflixApp.git
 ```
 3. Navegue até o diretório raiz do projeto: 
 ``` 
-cd cineflix-app
+cd CineflixApp
+```
+4. Instale as dependências do projeto: 
 ``` 
-4. Construa a imagem Docker usando o comando docker build. O comando deve ter a seguinte estrutura: 
+npm install
+```
+5. Construa o projeto: 
+``` 
+ng build
+```
+6. Construa a imagem Docker usando o comando docker build. O comando deve ter a seguinte estrutura: 
 ``` 
 docker build -t nome_da_sua_imagem:tag .
 ``` 
-5. Execute o contêiner a partir da imagem criada usando o comando docker run. Por exemplo: 
+7. Execute o contêiner a partir da imagem criada usando o comando docker run. Por exemplo: 
 ``` 
 docker run -d -p 3000:80 nome_da_sua_imagem:tag
 ``` 
-6. O aplicativo estará acessível em seu navegador em: 
+8. O aplicativo estará acessível em seu navegador em: 
 ``` 
 http://localhost:3000
 ``` 
