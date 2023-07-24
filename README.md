@@ -26,12 +26,25 @@ Para executar o Cineflix App localmente, siga as etapas abaixo:
 1. Certifique-se de ter o Docker instalado em seu sistema.
 2. Clone este repositório em sua máquina local:
 ``` 
-git clone (https://github.com/Lexleon-Oliver/CineflixApp.git) 
+git clone https://github.com/Lexleon-Oliver/CineflixApp.git
 ```
-3. Navegue até o diretório raiz do projeto: `cd cineflix-app`.
-4. Construa a imagem Docker usando o comando docker build. O comando deve ter a seguinte estrutura: `docker build -t nome_da_sua_imagem:tag .`
-5. Execute o contêiner a partir da imagem criada usando o comando docker run. Por exemplo: `docker run -d -p 3000:80 nome_da_sua_imagem:tag`
-6. O aplicativo estará acessível em seu navegador em: `http://localhost:3000` (ou outra porta definida no comando acima).
+3. Navegue até o diretório raiz do projeto: 
+``` 
+cd cineflix-app
+``` 
+4. Construa a imagem Docker usando o comando docker build. O comando deve ter a seguinte estrutura: 
+``` 
+docker build -t nome_da_sua_imagem:tag .
+``` 
+5. Execute o contêiner a partir da imagem criada usando o comando docker run. Por exemplo: 
+``` 
+docker run -d -p 3000:80 nome_da_sua_imagem:tag
+``` 
+6. O aplicativo estará acessível em seu navegador em: 
+``` 
+http://localhost:3000
+``` 
+ (ou outra porta definida no comando acima).
 
 ## Contribuição
 
