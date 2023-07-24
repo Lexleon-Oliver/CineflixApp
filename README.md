@@ -46,7 +46,7 @@ docker build -t nome_da_sua_imagem:tag .
 ``` 
 7. Execute o contêiner a partir da imagem criada usando o comando docker run. Por exemplo: 
 ``` 
-docker run -d -p 3000:80 nome_da_sua_imagem:tag
+docker run -d -p 3000:80 --name nome_do_seu_container nome_da_sua_imagem:tag
 ``` 
 8. O aplicativo estará acessível em seu navegador em: 
 ``` 
