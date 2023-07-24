@@ -1,7 +1,5 @@
 # Cineflix App - Catálogo Digital de Filmes e Séries
 
-![Cineflix App](https://drive.google.com/file/d/1d8_NIJ_YJfgpr_iU1wW9eD2-JZ2cCX7B/view?usp=sharing)
-
 ## Descrição do Projeto
 
 O Cineflix App é um catálogo digital de filmes e séries desenvolvido em Angular e empacotado em um container Docker. O objetivo principal do projeto é fornecer uma plataforma onde os usuários possam visualizar e explorar uma vasta coleção de filmes e séries previamente cadastrados por meio de uma API.
