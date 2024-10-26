@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -25,37 +25,30 @@ import { EstrelasComponent } from './main/estrelas/estrelas/estrelas.component';
 import { SelectedSerieComponent } from './main/selected-serie/selected-serie.component';
 import { RendererizaFilmeComponent } from './main/rendereriza-filme/rendereriza-filme.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    UsersComponent,
-    MainComponent,
-    UserCardComponent,
-    NavBarMainComponent,
-    NavbuttonComponent,
-    SeriesCardComponent,
-    CategoryCarrouselComponent,
-    ErrorComponentComponent,
-    NavBarSelectButtonComponent,
-    NavBarHamburgerMenuComponent,
-    HamburgerButtonComponent,
-    NavBarComponent,
-    UserListComponent,
-    EstrelasComponent,
-    SelectedSerieComponent,
-    RendererizaFilmeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ModalModule,
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        UsersComponent,
+        MainComponent,
+        UserCardComponent,
+        NavBarMainComponent,
+        NavbuttonComponent,
+        SeriesCardComponent,
+        CategoryCarrouselComponent,
+        ErrorComponentComponent,
+        NavBarSelectButtonComponent,
+        NavBarHamburgerMenuComponent,
+        HamburgerButtonComponent,
+        NavBarComponent,
+        UserListComponent,
+        EstrelasComponent,
+        SelectedSerieComponent,
+        RendererizaFilmeComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        ModalModule,
+        FormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
