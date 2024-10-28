@@ -2,9 +2,11 @@
 <div class="inline">
     <label class="label">Relevância:</label>
     <div class="estrelas inline" (click)="rate($event)">
-        <span *ngFor="let star of stars" [ngClass]="{'checked': rating >= star}" [attr.data-value]="star">
+      @for (star of stars; track $index) {
+        <span [ngClass]="{'checked': rating >= star}" [attr.data-value]="star">
             <i class="fas fa-star"></i>
         </span>
+      }
     </div>
 </div>
 

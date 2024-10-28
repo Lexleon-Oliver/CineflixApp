@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserInMainService {
   private userLogged:User
+  private readonly USERS_KEY = 'cineflixUsers';
 
 
   login(user: User) {
@@ -18,7 +19,13 @@ export class UserInMainService {
   }
 
   saveToLocalStorage(users: User[]): void {
-    localStorage.setItem('cineflixUsers', JSON.stringify(users));
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+  }
+
+
+  getStoredUsers(): User[] | null {
+    const usersJson = localStorage.getItem(this.USERS_KEY);
+    return usersJson ? JSON.parse(usersJson) as User[] : null;
   }
 
 

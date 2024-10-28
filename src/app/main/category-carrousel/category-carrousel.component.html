@@ -1,23 +1,35 @@
 <div class="container">
   <h2>{{ category }}</h2>
-  <div *ngIf="!seasonSelecionada && !categoriasFilmes.includes(category)" class="wrapper">
-    <div *ngFor="let serie of seriesFiltradas">
-      <app-series-card
-        [serieObj]="serie"></app-series-card>
+  @if (!seasonSelecionada && !categoriasFilmes.includes(category)) {
+    <div class="wrapper">
+      @for (serie of seriesFiltradas; track $index) {
+        <div>
+          <app-series-card
+            [serieObj]="serie"></app-series-card>
+        </div>
+      }
     </div>
-  </div>
-  <div *ngIf="seasonSelecionada" class="wrapper">
-    <div *ngFor="let episode of seasonSelecionada.episode">
-      <app-series-card
-        [episodeObj]="episode" [iconSeason]="seasonSelecionada.seasonBack"></app-series-card>
-    </div>
-  </div>
+  }
 
-  <div *ngIf="!seasonSelecionada && categoriasFilmes.includes(category)" class="wrapper">
-    <div *ngFor="let filme of filmesFiltrados">
-      <app-series-card
-        [filmeObj]="filme"></app-series-card>
+  @if (seasonSelecionada) {
+    <div class="wrapper">
+      @for (episode of seasonSelecionada.episode; track $index) {
+        <div>
+          <app-series-card
+            [episodeObj]="episode" [iconSeason]="seasonSelecionada.seasonBack"></app-series-card>
+        </div>
+      }
     </div>
-  </div>
+  }
 
+  @if (!seasonSelecionada && categoriasFilmes.includes(category)) {
+    <div class="wrapper">
+      @for (filme of filmesFiltrados; track $index) {
+        <div >
+          <app-series-card
+            [filmeObj]="filme"></app-series-card>
+        </div>
+      }
+    </div>
+  }
 </div>

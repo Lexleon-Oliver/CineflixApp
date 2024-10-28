@@ -1,129 +1,163 @@
-<div class="container filmeContainer" *ngIf="filme" [ngStyle]="{ 'background-image': 'url(' + filme.background+ ')', 'background-size': 'cover', 'background-position': 'center center' }">
+@if (filme) {
+  <div class="container filmeContainer" [ngStyle]="{ 'background-image': 'url(' + filme.background+ ')', 'background-size': 'cover', 'background-position': 'center center' }">
     <div class="overlay"></div>
     <div class="containerMain">
-        <section class="containerImgName">
-            <h2 class="titleFilme">{{filme.nameBr}}</h2>
-        </section>
-        <section>
-            <div class="topBrasil">
-                <p class="topDez">
-                    TOP 10
-                </p>
-                <p class="topDez2">Lançamentos</p>
+      <section class="containerImgName">
+        <h2 class="titleFilme">{{filme.nameBr}}</h2>
+      </section>
+      <section>
+        <div class="topBrasil">
+          <p class="topDez">
+            TOP 10
+          </p>
+          <p class="topDez2">Lançamentos</p>
+        </div>
+        <div class="modal-infos">
+          @if (filme.year) {
+            <div class="modal-infos-year">
+              {{ filme.year }}
             </div>
-            <div class="modal-infos">
-                <div class="modal-infos-year" *ngIf="filme.year">
-                    {{ filme.year }}
-                </div>
-                <div
-                    class="modal-infos-minAge"
-                    *ngIf="filme.minAge"
-                    [ngClass]="{
-                        'min-ageAll': filme.minAge < 13,
-                        'min-age13': filme.minAge >= 13 && filme.minAge < 16,
-                        'min-age16': filme.minAge >= 16 && filme.minAge < 18,
-                        'min-age18': filme.minAge >= 18
-                    }"
-                >
-                    <p>{{ filme.minAge }}</p>
-                </div>
-                <div class="modal-infos-time" *ngIf="filme.time">
-                    {{ secondsToHms(filme.time) }}
-                </div>
+          }
+          @if (filme.minAge) {
+            <div class="modal-infos-minAge"
+            [ngClass]="{
+              'min-ageAll': filme.minAge < 13,
+              'min-age13': filme.minAge >= 13 && filme.minAge < 16,
+              'min-age16': filme.minAge >= 16 && filme.minAge < 18,
+              'min-age18': filme.minAge >= 18}"
+            >
+              <p>{{ filme.minAge }}</p>
             </div>
-            <div class="modal-details">
-                <div class="modal-details-item">
-                    <div>
-                        <span>Gênero:&nbsp;</span>
-                        {{ filme.genre }}
-                    </div>
-                </div>
+          }
+          @if (filme.time) {
+            <div class="modal-infos-time">
+              {{ secondsToHms(filme.time) }}
             </div>
-            <div class="containerDescrip">
-                <p>
-                    {{filme.description}}
-                </p>
-                <app-estrelas [rating]="filme.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+          }
+        </div>
+        <div class="modal-details">
+          <div class="modal-details-item">
+            <div>
+              <span>Gênero:&nbsp;</span>
+              {{ filme.genre }}
+            </div>
+          </div>
+        </div>
+        <div class="containerDescrip">
+          <p>
+            {{filme.description}}
+          </p>
+          <app-estrelas [rating]="filme.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+          @if (rota !== 'NovoFilme' && rota !== 'NovaSerie') {
+            <div class="btnContainer">
+              @if (!ocultaBotaoAssistir) {
+                <button class="btn1"  (click)="abrirPlayer(filme)"><i class="fa-solid fa fa-play"></i><p>Assistir</p></button>
+              }
+              <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
+              @if (id!==0 && rota!== 'Início') {
+                <button class="btn4" (click)="editar()"><i class="fa-solid fa-pen-to-square"></i><p>Editar</p></button>
+              }
+              @if (id!==0 && rota=== 'Filmes') {
+                <button class="btn3" (click)="remover()"><i class="fa-solid fa-trash"></i><p>Remover</p></button>
+              }
+            </div>
+          }
 
-                <div *ngIf="rota !== ('NovoFilme' ||'NovaSerie')" class="btnContainer">
-                    <button *ngIf="!ocultaBotaoAssistir" class="btn1"  (click)="abrirPlayer(filme)"><i class="fa-solid fa fa-play"></i><p>Assistir</p></button>
-                    <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
-                    <button *ngIf="id!==0 && rota!== 'Início'" class="btn4" (click)="editar()"><i class="fa-solid fa-pen-to-square"></i><p>Editar</p></button>
-                    <button *ngIf="id!==0 && rota=== 'Filmes'" class="btn3" (click)="remover()"><i class="fa-solid fa-trash"></i><p>Remover</p></button>
-    
-                </div>
-            </div>
-        </section>
-        <section *ngIf="(rota === 'NovoFilme'|| rota === 'NovaSerie') || modoEdicao" class="form-container cadastro" >
-            <h2 class="tituloCadastro" *ngIf="!modoEdicao">Cadastrar</h2>
-            <h2 class="tituloCadastro" *ngIf="modoEdicao">Editar</h2>
-            <div class="form-column cadastrar">
+        </div>
+      </section>
+      @if ((rota === 'NovoFilme'|| rota === 'NovaSerie') || modoEdicao) {
+        <section class="form-container cadastro" >
+          @if (!modoEdicao) {
+            <h2 class="tituloCadastro">Cadastrar</h2>
+          }@else {
+            <h2 class="tituloCadastro">Editar</h2>
+          }
+          <div class="form-column cadastrar">
+            <div class="form-column" >
+              @if (rota === 'NovaSerie' || rota==='Séries') {
+                <h3 class="subtitulo">SÉRIE</h3>
+              }
+              <h3>Imagem de Fundo:</h3>
+              <input type="text" [(ngModel)]="filme.background" class="form-input" style="background-color: transparent;">
+              <h3>Nome Nacional:</h3>
+              <input type="text" [(ngModel)]="filme.nameBr"  class="form-input" style="background-color: transparent;">
+              <h3>Nome Original:</h3>
+              <input type="text" [(ngModel)]="filme.name"  class="form-input" style="background-color: transparent;">
+              <h3>Ano:</h3>
+              <input type="text" [(ngModel)]="filme.year"  class="form-input" style="background-color: transparent;">
+              <h3>Imagem Cartaz:</h3>
+              <input type="text" [(ngModel)]="filme.thumbnail"  class="form-input" style="background-color: transparent;">
+              @if (rota === 'NovoFilme' || (modoEdicao && rota === 'Filmes')) {
+                <h3 >Armazenamento:</h3>
+                <input type="text" [(ngModel)]="filme.storage"  class="form-input" style="background-color: transparent;">
+              }
+              <h3>Gênero:</h3>
+              <input type="text" [(ngModel)]="filme.genre"  class="form-input" style="background-color: transparent;">
+              <h3>Avaliação:</h3>
+              <input type="text" [(ngModel)]="filme.rating" placeholder="Avaliação" class="form-input" style="background-color: transparent;">
+              <h3>Classificação Indicativa:</h3>
+              <input type="text" [(ngModel)]="filme.minAge" placeholder="Classificação Indicativa" class="form-input" style="background-color: transparent;">
+              <h3>Duração:</h3>
+              <input type="text" [(ngModel)]="filme.time" placeholder="Duração" class="form-input" style="background-color: transparent;">
+              @if (rota === 'NovaSerie' || rota==='Séries') {
+                <label for="completed">Completa:</label>
+                <input type="checkbox" [(ngModel)]="serie.completed" id="completed">
+              }
+              <div></div>
+              <h3>Sinopse:</h3>
+              <textarea [(ngModel)]="filme.description" class="form-input" style="background-color: transparent; width: 84.5%; height: 100px;"></textarea>
+              <div></div>
+              @if (rota === 'NovaSerie' || rota==='Séries') {
+                <h3 class="subtitulo">TEMPORADAS</h3>
+              }
+              @if (serie) {
                 <div class="form-column" >
-                    <h3 *ngIf="rota === 'NovaSerie' || rota==='Séries'" class="subtitulo">SÉRIE</h3>
-                    <h3>Imagem de Fundo:</h3>
-                    <input type="text" [(ngModel)]="filme.background" class="form-input" style="background-color: transparent;">
-                    <h3>Nome Nacional:</h3>
-                    <input type="text" [(ngModel)]="filme.nameBr"  class="form-input" style="background-color: transparent;">
-                    <h3>Nome Original:</h3>
-                    <input type="text" [(ngModel)]="filme.name"  class="form-input" style="background-color: transparent;">
-                    <h3>Ano:</h3>
-                    <input type="text" [(ngModel)]="filme.year"  class="form-input" style="background-color: transparent;">
-                    <h3>Imagem Cartaz:</h3>
-                    <input type="text" [(ngModel)]="filme.thumbnail"  class="form-input" style="background-color: transparent;">
-                    <h3 *ngIf="rota === 'NovoFilme' || (modoEdicao && rota === 'Filmes')" >Armazenamento:</h3>
-                    <input *ngIf="rota === 'NovoFilme' || (modoEdicao && rota === 'Filmes')" type="text" [(ngModel)]="filme.storage"  class="form-input" style="background-color: transparent;">
-                    <h3>Gênero:</h3>
-                    <input type="text" [(ngModel)]="filme.genre"  class="form-input" style="background-color: transparent;">
-                    <h3>Avaliação:</h3>
-                    <input type="text" [(ngModel)]="filme.rating" placeholder="Avaliação" class="form-input" style="background-color: transparent;">
-                    <h3>Classificação Indicativa:</h3>
-                    <input type="text" [(ngModel)]="filme.minAge" placeholder="Classificação Indicativa" class="form-input" style="background-color: transparent;">
-                    <h3>Duração:</h3>
-                    <input type="text" [(ngModel)]="filme.time" placeholder="Duração" class="form-input" style="background-color: transparent;">
-                    <label *ngIf="rota === 'NovaSerie' || rota==='Séries'" for="completed">Completa:</label>
-                    <input *ngIf="rota === 'NovaSerie' || rota==='Séries'" type="checkbox" [(ngModel)]="serie.completed" id="completed">
-                    <div></div>
-                    <h3>Sinopse:</h3>
-                    <textarea [(ngModel)]="filme.description" class="form-input" style="background-color: transparent; width: 84.5%; height: 100px;"></textarea>
-                    <div></div>
-                    <h3 *ngIf="rota === 'NovaSerie' || rota==='Séries'" class="subtitulo">TEMPORADAS</h3>
-                    <div *ngIf="serie" class="form-column" >
-                        <h3>Selecione uma Temporada:</h3>
-                        <select class="form-input" [(ngModel)]="idTemp" (ngModelChange)="onSeasonSelected()" style="background-color: transparent;">
-                            <option value="">Nova</option>
-                            <option *ngFor="let season of serie.season" [value]="season.id">{{ season.numSeason }}ª Temporada</option>
+                    <h3>Selecione uma Temporada:</h3>
+                    <select class="form-input" [(ngModel)]="idTemp" (ngModelChange)="onSeasonSelected()" style="background-color: transparent;">
+                      <option value="">Nova</option>
+                      @for (season of serie.season; track $index) {
+                        <option [value]="season.id">{{ season.numSeason }}ª Temporada</option>
+                      }
+                    </select>
+                    @if (temporada) {
+                      <div >
+                          <h3>Número da Temporada:</h3>
+                          <input type="text" [(ngModel)]="temporada.numSeason" placeholder="Número da Temporada" class="form-input" style="background-color: transparent;">
+                          <h3>Cartaz:</h3>
+                          <input type="text" [(ngModel)]="temporada.seasonBack" placeholder="Cartaz" class="form-input" style="background-color: transparent;">
+                      </div>
+                      <div></div>
+                      <h3 class="subtitulo">EPISÓDIOS</h3>
+                      <div class="form-column">
+                        <h3>Selecione um Episódio:</h3>
+                        <select class="form-input" [(ngModel)]="idEpisode" (ngModelChange)="onEpisodeSelected()" style="background-color: transparent;">
+                          <option value="">Novo</option>
+                          @for (episode of temporada.episode; track $index) {
+                            <option [value]="episode.id">Episódio {{ episode.numEpisode }}</option>
+                          }
                         </select>
-                        <div *ngIf="temporada">
-                            <h3>Número da Temporada:</h3>
-                            <input type="text" [(ngModel)]="temporada.numSeason" placeholder="Número da Temporada" class="form-input" style="background-color: transparent;">
-                            <h3>Cartaz:</h3>
-                            <input type="text" [(ngModel)]="temporada.seasonBack" placeholder="Cartaz" class="form-input" style="background-color: transparent;">
-                        </div>
-                        <div></div>
-                        <h3 *ngIf="temporada" class="subtitulo">EPISÓDIOS</h3>
-                        <div *ngIf="temporada" class="form-column">
-                            <h3>Selecione um Episódio:</h3>
-                            <select class="form-input" [(ngModel)]="idEpisode" (ngModelChange)="onEpisodeSelected()" style="background-color: transparent;">
-                                <option value="">Novo</option>
-                                <option *ngFor="let episode of temporada.episode" [value]="episode.id">Episódio {{ episode.numEpisode }}</option>
-                            </select>
-                            <div *ngIf="episodio">
-                                <h3>Número do Episódio:</h3>
-                                <input type="text" [(ngModel)]="episodio.numEpisode" placeholder="Número do Episódio" class="form-input" style="background-color: transparent;">
-                                <h3>Nome do Episódio:</h3>
-                                <input type="text" [(ngModel)]="episodio.nameEpisode" placeholder="Nome do Episódio" class="form-input" style="background-color: transparent;">
-                                <h3>Link:</h3>
-                                <input type="text" [(ngModel)]="episodio.storage" placeholder="Link do Episódio" class="form-input" style="background-color: transparent;">
-                            </div>
-                        </div>
-                        
-                    </div>
+                        @if (episodio) {
+                          <div>
+                              <h3>Número do Episódio:</h3>
+                              <input type="text" [(ngModel)]="episodio.numEpisode" placeholder="Número do Episódio" class="form-input" style="background-color: transparent;">
+                              <h3>Nome do Episódio:</h3>
+                              <input type="text" [(ngModel)]="episodio.nameEpisode" placeholder="Nome do Episódio" class="form-input" style="background-color: transparent;">
+                              <h3>Link:</h3>
+                              <input type="text" [(ngModel)]="episodio.storage" placeholder="Link do Episódio" class="form-input" style="background-color: transparent;">
+                          </div>
+                        }
+                      </div>
+                    }
                 </div>
+              }
             </div>
-            <section class="buttonContainer">
-                <button type="button" class="btnNetflix" (click)="salvar()">Salvar</button>
-            </section>
+          </div>
+          <section class="buttonContainer">
+            <button type="button" class="btnNetflix" (click)="salvar()">Salvar</button>
+          </section>
         </section>
+      }
     </div>
-</div>
+  </div>
+}
 

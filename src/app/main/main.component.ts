@@ -20,7 +20,7 @@ export class MainComponent implements OnInit {
     "NOVIDADES","ÚLTIMOS ADICIONADOS","FILMES","CLÁSSICOS","AÇÃO","ANIMAÇÃO",
     "AVENTURA","COMÉDIA","DRAMA","FAMÍLIA","FANTASIA","FICÇÃO CIENTÍFICA","ROMANCE","TERROR"
   ];
-  
+
   hasId: boolean = false;
   isNew: boolean = false;
 
@@ -36,34 +36,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = this.userService.getCurrentUser();
-    switch (this.route.snapshot.url[0].path) {
-      case 'series':
-        this.rota = 'Séries';
-        break;
-      case 'filmes':
-        this.rota = 'Filmes';
-        break;
-      case 'novo-filme':
-        this.rota = 'NovoFilme';
-        break;
-      case 'nova-serie':
-        this.rota = 'NovaSerie';
-        break;
-      default:
-        this.rota = 'Início';
-        break;
-    }
-    if(this.route.snapshot.params.hasOwnProperty('id')){
-      this.hasId=true;
-      if(this.rota === 'Séries'){
-        let id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
-        this.appService.getSerieById(id).subscribe(serie => {
-          this.serieSelecionada = serie;
-        }, error => {
-          console.log(error);
-        });
-      }
-    }
+    this.definirRota();
+    this.observarMudancasDeParametros();
     this.verificarNovo();
   }
 
@@ -87,6 +61,37 @@ export class MainComponent implements OnInit {
   onSerieSelected(serie: Serie) {
     this.serieSelecionada=serie;
   }
+
+    // Função para definir a rota
+    private definirRota() {
+      const path = this.route.snapshot.url[0].path;
+      this.rota = path === 'series' ? 'Séries' :
+                  path === 'filmes' ? 'Filmes' :
+                  path === 'novo-filme' ? 'NovoFilme' :
+                  path === 'nova-serie' ? 'NovaSerie' : 'Início';
+    }
+
+    // Função para observar mudanças nos parâmetros da rota e carregar a série correspondente
+    private observarMudancasDeParametros() {
+      this.route.params.subscribe(params => {
+        if (params['id']) {
+          this.hasId = true;
+          this.carregarSeriePorId(+params['id']); // Converte o ID para número
+        }
+      });
+    }
+
+    // Função para carregar a série pelo ID
+    private carregarSeriePorId(id: number) {
+      this.appService.getSerieById(id).subscribe(
+        serie => {
+          this.serieSelecionada = serie;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
 
 }
 

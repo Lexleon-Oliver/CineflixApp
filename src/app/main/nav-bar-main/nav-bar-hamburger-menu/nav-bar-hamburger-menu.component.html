@@ -6,21 +6,26 @@
       <span></span>
       <span></span>
     </label>
- 
-    <div class="menuModal" *ngIf="menuState" [@inOutAnimationModal]></div>
-    <div *ngIf="menuState" class="menuButtonsContainer" [@inOutAnimationMenu]>
-        <div class="menuHeader">
-            <div class="profileInfo">
-                <img src="{{userLogged.avatarUrl}}" alt="">
-                <h1>{{ userLogged.name }}</h1>
-                <h1>Teste</h1>
-            </div>
-            <ul>
-                <li *ngFor="let item of itens.profileButtons"><app-hamburger-button [text]="item.text" [radioGroup]="'navButtons'"></app-hamburger-button></li>
-            </ul>
-        </div>
-        <ul class="mainButtons">
-            <li *ngFor="let item of itens.mainButtons"><app-hamburger-button [text]="item.text" [radioGroup]="'navButtons'" [checked]="item.checked"></app-hamburger-button></li>
-        </ul>
-    </div>
+
+    @if (menuState) {
+      <div class="menuModal" [@inOutAnimationModal]></div>
+      <div class="menuButtonsContainer" [@inOutAnimationMenu]>
+          <div class="menuHeader">
+              <div class="profileInfo">
+                  <img src="{{userLogged.avatarUrl}}" alt="">
+                  <h1>{{ userLogged.name }}</h1>
+              </div>
+          </div>
+          <ul class="mainButtons">
+            @for (item of itens.mainButtons; track $index) {
+              <li>
+                <app-hamburger-button [text]="item.text" [radioGroup]="'navButtons'" [checked]="item.checked" [route]="item.route">
+                </app-hamburger-button>
+              </li>
+
+            }
+          </ul>
+      </div>
+    }
+
 </div>

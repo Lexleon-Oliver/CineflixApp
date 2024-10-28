@@ -86,18 +86,13 @@ export class CategoryCarrouselComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.getNovidades(0);
-    this.getUltimos();
-    this.getSeries();
-    this.getFilmes(0);
-    setTimeout(() => {
-      this.filterSeries();
-    }, 2000); // Espera 1 segundo antes de chamar filterSeries
-    setTimeout(() => {
-      this.filterFilmes();
-    }, 2000); // Espera 2 segundo antes de chamar filterFilmes
-
+  async ngOnInit(): Promise<void> {
+    await this.getNovidades(0);
+    await this.getUltimos();
+    await this.getSeries();
+    await this.getFilmes(0);
+    this.filterSeries();
+    this.filterFilmes();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -153,45 +148,18 @@ export class CategoryCarrouselComponent implements OnInit {
         this.pesquisarEm(this.ultimos);
         break;
       case 'AÇÃO':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Ação'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'ANIMAÇÃO':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Animação'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'AVENTURA':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Aventura'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'COMÉDIA':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Comédia'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'DRAMA':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Drama'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'FAMÍLIA':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Família'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'FANTASIA':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Fantasia'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'FICÇÃO CIENTÍFICA':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Ficção científica'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'ROMANCE':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Romance'));
-        this.pesquisarEm(listFilmes);
-        break;
       case 'TERROR':
-        listFilmes= this.filmes.filter(filme => filme.genre.split(',').map(g => g.trim()).includes('Terror'));
+        listFilmes = this.filterByGenre(this.category);
         this.pesquisarEm(listFilmes);
-        break;
+      break;
     }
   }
 
@@ -211,5 +179,11 @@ export class CategoryCarrouselComponent implements OnInit {
     }else{
       this.filmesFiltrados =listFilmes;
     }
+  }
+
+  filterByGenre(genre: string): Filme[] {
+    return this.filmes.filter(filme =>
+      filme.genre.split(',').map(g => g.trim()).includes(genre)
+    );
   }
 }

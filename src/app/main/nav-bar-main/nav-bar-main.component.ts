@@ -22,34 +22,29 @@ export class NavBarMainComponent implements OnInit {
   userLogged: User;
   navBackground = false;
   navButtons = {
-    profileButtons:[
-      {text: 'Conta', route:'', checked:""},
-      {text: 'Centro de ajuda', route:'', checked:""},
-      {text: 'Sair da Netflix', route:'', checked:""},
-    ],
     mainButtons:[
       {text: 'Início', route:'/main/:id', checked:""},
       {text: 'Séries', route:'/series', checked:''},
       {text: 'Filmes', route:'/filmes', checked:''},
-      
+
     ]
   }
 
   @Output() onSearch = new EventEmitter<string>();
   @Output() onMenuChange = new EventEmitter<string>();
 
-  constructor(private userService:UserInMainService, private route: Router, 
-    private scrollService: WindowScrollService, private rotaAtiva: ActivatedRoute) { 
+  constructor(private userService:UserInMainService, private route: Router,
+    private scrollService: WindowScrollService, private rotaAtiva: ActivatedRoute) {
     this.userLoggedIn()
     this.getScreenSize();
     this.scrollY$ = this.scrollService.scrollY$;
   }
 
-  @HostListener('window:scroll', ['$event']) 
+  @HostListener('window:scroll', ['$event'])
   onScroll(e: Event): void {
     this.scrollService.scrollY.next(this.getYPosition(e));
   }
-  
+
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
@@ -97,5 +92,5 @@ export class NavBarMainComponent implements OnInit {
         break;
     }
   }
-  
+
 }

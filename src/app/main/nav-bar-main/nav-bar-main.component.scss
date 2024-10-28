@@ -14,7 +14,7 @@
 }
 
 .navContainer {
-    padding: 0 4%;    
+    padding: 0 4%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -82,7 +82,8 @@
     background-color: black;
     border: solid 1px white;
     margin-right: 10px;
-    padding: 4px 8px
+    padding: 4px 8px;
+    color: white;
 }
 
 .brand__logo{
@@ -98,8 +99,8 @@
 
 @media screen and (max-width: 400px){
     .Container{
-        height: 50px !important;   
-        background-color: black; 
+        height: 50px !important;
+        background-color: black;
     }
 
     .navBackgroundBlack {
@@ -112,11 +113,11 @@
 
 @media screen and (max-width: 950px){
     .Container{
-        height: 41px;    
+        height: 41px;
     }
 
     .logoConfig {
-        min-width: 76px;    
+        min-width: 76px;
     }
 
     .buttonsContainer {

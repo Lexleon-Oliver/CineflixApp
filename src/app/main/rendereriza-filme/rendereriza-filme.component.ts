@@ -329,7 +329,7 @@ export class RendererizaFilmeComponent implements OnInit {
     this.modoEdicao=true;
   }
 
-   getSerie(id: number) {
+  getSerie(id: number) {
     if(sessionStorage.getItem('cineflixAtualizaSerie') || !localStorage.getItem('CineflixSeries')){
       this.getSeries(0);
     }else{
