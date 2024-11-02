@@ -1,4 +1,4 @@
-<div *ngIf="serieObj">
+<!-- <div *ngIf="serieObj">
   <section class="series-image-wrapper">
     <img
       (click)="modalService.open('object-' + serieObj.id)"
@@ -7,8 +7,8 @@
       alt=""
     />
   </section>
-</div>
-<div *ngIf="episodeObj">
+</div> -->
+<!-- <div *ngIf="episodeObj">
   <section class="series-image-wrapper">
     <h3 class="episode-title">{{ '0' + episodeObj.numEpisode+'- '+episodeObj.nameEpisode }}</h3>
     <img
@@ -18,19 +18,21 @@
       alt=""
     />
   </section>
-</div>
-<div *ngIf="filmeObj">
-  <section class="series-image-wrapper">
-    <img
-      (click)="modalService.open('object-' + filmeObj.id)"
-      [src]="filmeObj.thumbnail"
-      id="test"
-      alt=""
-    />
-  </section>
-</div>
+</div> -->
+@if (filmeObj) {
+  <div>
+    <section class="series-image-wrapper">
+      <img
+        (click)="modalService.open('object-' + filmeObj.id)"
+        [src]="filmeObj.thumbnail"
+        id="test"
+        alt=""
+      />
+    </section>
+  </div>
+}
 
-<jw-modal *ngIf="serieObj" id="{{ 'object-' + serieObj.id }}">
+<!-- <jw-modal *ngIf="serieObj" id="{{ 'object-' + serieObj.id }}">
   <div class="modal-top-side">
     <button
       class="modal-exit-btn"
@@ -80,55 +82,63 @@
       </div>
     </div>
   </div>
-</jw-modal>
-<jw-modal *ngIf="filmeObj" id="{{ 'object-' + filmeObj.id }}">
-  <div class="modal-top-side">
-    <button
-      class="modal-exit-btn"
-      (click)="modalService.close('object-' + filmeObj.id)"
-    >
-      &#10005;
-    </button>
-    <button class="modal-watch-btn" (click)="assistirFilme()">&#9654;&nbsp; Assistir</button>
-    <img class="modal-img" [src]="filmeObj.background" alt="" />
-    <h2 class="modal-title">{{filmeObj.nameBr}}</h2>
-  </div>
-  <div class="modal-card">
-    <div class="modal-left-side">
-      <div class="modal-infos">
-        <div class="modal-infos-relevance">
-          {{getRelevance(filmeObj.rating)}}
+</jw-modal> -->
+@if (filmeObj) {
+  <jw-modal id="{{ 'object-' + filmeObj.id }}">
+    <div class="modal-top-side">
+      <button
+        class="modal-exit-btn"
+        (click)="modalService.close('object-' + filmeObj.id)"
+      >
+        &#10005;
+      </button>
+      <button class="modal-watch-btn" (click)="assistirFilme()">&#9654;&nbsp; Assistir</button>
+      <img class="modal-img" [src]="filmeObj.background" alt="" />
+      <h2 class="modal-title">{{filmeObj.nameBr}}</h2>
+    </div>
+    <div class="modal-card">
+      <div class="modal-left-side">
+        <div class="modal-infos">
+          <div class="modal-infos-relevance">
+            {{getRelevance(filmeObj.rating)}}
+          </div>
+          @if (filmeObj.year) {
+            <div class="modal-infos-year">
+              {{ filmeObj.year }}
+            </div>
+          }
+          @if (filmeObj.minAge) {
+            <div
+              class="modal-infos-minAge"
+              [ngClass]="{
+                'min-ageAll': filmeObj.minAge < 13,
+                'min-age13': filmeObj.minAge >= 13 && filmeObj.minAge < 16,
+                'min-age16': filmeObj.minAge >= 16 && filmeObj.minAge < 18,
+                'min-age18': filmeObj.minAge >= 18
+              }"
+            >
+              <p>{{ filmeObj.minAge }}</p>
+            </div>
+          }
+          @if (filmeObj.time) {
+            <div class="modal-infos-time">
+              {{ secondsToHms(filmeObj.time) }}
+            </div>
+          }
         </div>
-        <div class="modal-infos-year" *ngIf="filmeObj.year">
-          {{ filmeObj.year }}
-        </div>
-        <div
-          class="modal-infos-minAge"
-          *ngIf="filmeObj.minAge"
-          [ngClass]="{
-            'min-ageAll': filmeObj.minAge < 13,
-            'min-age13': filmeObj.minAge >= 13 && filmeObj.minAge < 16,
-            'min-age16': filmeObj.minAge >= 16 && filmeObj.minAge < 18,
-            'min-age18': filmeObj.minAge >= 18
-          }"
-        >
-          <p>{{ filmeObj.minAge }}</p>
-        </div>
-        <div class="modal-infos-time" *ngIf="filmeObj.time">
-          {{ secondsToHms(filmeObj.time) }}
+        <div class="modal-description">
+          <div>{{ filmeObj.description }}</div>
         </div>
       </div>
-      <div class="modal-description">
-        <div>{{ filmeObj.description }}</div>
+      <div class="modal-details">
+        <div class="modal-details-item">
+          <div>
+            <span>Gênero:&nbsp;</span>
+            {{ filmeObj.genre }}
+          </div>
+        </div>
       </div>
     </div>
-    <div class="modal-details">
-      <div class="modal-details-item">
-        <div>
-          <span>Gênero:&nbsp;</span>
-          {{ filmeObj.genre }}
-        </div>
-      </div>
-    </div>
-  </div>
-</jw-modal>
+  </jw-modal>
+}
+

@@ -15,11 +15,11 @@
                 <p>
                     {{serie.description}}
                 </p>
-                <app-estrelas [rating]="serie.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+                <!-- <app-estrelas [rating]="serie.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas> -->
 
                 <div class="btnContainer">
                     <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
-    
+
                 </div>
             </div>
         </section>
@@ -43,12 +43,12 @@
                 <p>
                     {{filme.description}}
                 </p>
-                <app-estrelas [rating]="filme.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+                <!-- <app-estrelas [rating]="filme.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas> -->
 
                 <div class="btnContainer">
                     <button class="btn1"  (click)="abrirPlayer(filme)"><i class="fa-solid fa fa-play"></i><p>Assistir</p></button>
                     <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
-    
+
                 </div>
             </div>
         </section>

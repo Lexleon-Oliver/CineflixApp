@@ -1,0 +1,395 @@
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(0,0,0,0.2637429971988795) 8%, rgba(0,0,0,0) 28%);
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 650px;
+}
+
+.filmeContainer {
+  position: relative;
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* ajuste o valor do alfa (último parâmetro) para definir a opacidade da sobreposição */
+  z-index: -1;
+}
+
+.titleFilme{
+  color: white;
+  font-family: 'Arial Black', Times;
+  font-size: 45px;
+  text-shadow: black 3px 3px 2px;
+  margin-top: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.containerMain {
+  color: #ffff;
+  max-width: 36%;
+  padding: 4%;
+  padding-top: 5%;
+  filter: brightness(0.8);
+}
+
+.containerImgName {
+  margin-top: 10%;
+  max-width: 650px;
+}
+
+.topBrasil {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.topDez {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: red;
+  width: 10.18%;
+  min-width: 30px;
+  max-width: 48px;
+  min-height: 30px;
+  height: 3.5vw;
+  padding: 2px;
+  border-radius: 10px;
+  font-size: 90%;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+.topDez2 {
+  padding-top: 10px;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.btnContainer {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.containerDescrip p {
+  width: 100%;
+  font-size: 1.4vw;
+  font-weight: 300;
+  margin-bottom: 15px;
+  line-height: 1.25;
+  margin-bottom: 10%;
+}
+
+.containerDescrip button {
+  height: 3.0vw;
+  padding: 0.68vw;
+  padding-left: 1.7vw;
+  padding-right: 2.05vw;
+  border-radius: 4px;
+  border: none;
+}
+
+
+.btn1, .btn5 {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 11.3vw;
+  margin-right: 0.6vw;
+}
+
+.btn1 p, .btn5 p{
+  margin-bottom: 0px;
+  width: fit-content;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.btn1:hover, .btn5:hover {
+  background-color: #ffffffa6;
+}
+
+.btn2 {
+  background-color: #ffffff67;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 11.3vw;
+}
+
+.btn2 img{
+  height: 2.4vw;
+  width: 2.4vw;
+}
+
+.btn2 p{
+  margin-bottom: 0px;
+  width: fit-content;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 2px;
+  font-size: 1.35vw;
+}
+
+.btn2:hover {
+  background-color: #ffffff44;
+}
+
+.btn3 {
+background-color: red;
+color: white;
+display: flex;
+align-items: center;
+justify-content: space-between;
+min-width: 11.3vw;
+// margin-left: 0.6vw;
+}
+
+.btn3:hover {
+background-color: orangered;
+}
+
+.btn3 p{
+margin-bottom: 0px;
+width: fit-content;
+color: white;
+font-weight: bold;
+text-align: center;
+padding-top: 2px;
+
+}
+
+.btn4 {
+background-color: yellow;
+color: black;
+display: flex;
+align-items: center;
+justify-content: space-between;
+min-width: 11.3vw;
+margin-left: 0.6vw;
+margin-right: 0.6vw;
+}
+
+.btn4:hover {
+background-color: orange;
+}
+
+.btn4 p{
+margin-bottom: 0px;
+width: fit-content;
+color: black;
+font-weight: bold;
+text-align: center;
+padding-top: 2px;
+
+}
+
+.modal-infos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 20px;
+  margin-top: 2%;
+
+  .modal-infos-relevance {
+    color: #46D369;
+    margin-right: 12px;
+    font-weight: 700;
+  }
+
+  .modal-infos-year{
+    color: white;
+    margin-right: 12px;
+  }
+
+  .modal-infos-minAge {
+
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 12px;
+
+    p {
+      color: black;
+      font-weight: 900;
+      text-align: center;
+    }
+  }
+
+  .min-ageAll {
+    background-color: #014F86;
+  }
+  .min-age13 {
+    background-color: #EBC500;
+  }
+  .min-age16 {
+    background-color: #FF8E0C;
+        }
+  .min-age18 {
+    background-color: #EF0704;
+  }
+
+
+  .modal-infos-time {
+    color: white;
+  }
+}
+.modal-details {
+  width: 85vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 18px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+
+  .modal-details-item {
+    width: 95%;
+    display: inline-flex;
+    margin-top: 12px;
+
+    div {
+      span {
+        color: #6E6E6E;
+      }
+      color: white;
+    }
+  }
+}
+
+.modal-details:last-child {
+  margin-bottom: 30px;
+}
+
+.buttonContainer {
+  margin-top: 10% !important;
+  margin-bottom: 200px !important;
+  background-color: transparent;
+}
+
+.btnNetflix {
+  width: 16.5vw;
+  height: 60px;
+  font-size: 1.625rem;
+  color: white;
+  background-color: #E50914;
+  border: none;
+  border-radius: 5px;
+  margin-left: 20%;
+}
+
+.btnNetflix:hover {
+  background-color: #FD000D;
+}
+
+.tituloCadastro {
+margin-top: 40px; /* Espaço de título */
+margin-bottom: 20px; /* Espaço de título */
+font-weight: bold;
+font-size: 1.6rem;
+text-align: center;
+}
+
+h3{
+margin-top: 5%;
+}
+
+input{
+color: #ffffff;
+background-color: transparent;
+text-align: center;
+}
+
+label{
+margin-left: 10%;
+margin-right: 2%;
+}
+
+textarea{
+color: white;
+font-family: 'Arial Black', Times;
+}
+
+.form-check-input{
+margin-left: 2%;
+}
+
+select{
+color: white;
+width: 15vw;
+height: auto;
+text-align: center;
+}
+
+checkbox{
+margin-left: 2%;
+}
+
+.subtitulo{
+text-align: center;
+}
+
+
+
+
+@media screen and (max-width: 840px) {
+
+  .containerDescrip button {
+      height: 4.94vw;
+      padding: 0.95vw;
+      padding-left: 2.4vw;
+      padding-right: 2.88vw;
+      border-radius: 4px;
+  }
+
+  .btn1 {
+      min-width: 16.3vw;
+      margin-right: 0.6vw;
+  }
+
+  .btn1 p{
+      margin-bottom: 0px;
+      font-size: 1.9vw;
+      padding-top: 2px;
+  }
+
+  .btn2 {
+      min-width: 24.56vw;
+  }
+
+  .btn2 img{
+      height: 2.4vw;
+      width: 2.4vw;
+  }
+
+  .btn2 p{
+      font-size: 1.9vw;
+  }
+
+}

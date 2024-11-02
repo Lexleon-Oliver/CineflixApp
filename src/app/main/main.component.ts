@@ -39,6 +39,11 @@ export class MainComponent implements OnInit {
     this.definirRota();
     this.observarMudancasDeParametros();
     this.verificarNovo();
+    console.log("usuario: ", this.user);
+    console.log("rota: ", this.rota);
+    console.log("novo: ", this.isNew);
+    console.log("ID: ", this.hasId);
+
   }
 
   onSearch(searchValue: string) {
@@ -50,12 +55,9 @@ export class MainComponent implements OnInit {
   }
 
   verificarNovo() {
-    this.route.url.subscribe(url => {
-      const currentUrl = url.join('/');
-      if (currentUrl.endsWith('adicionar')) {
-        this.isNew=true;
-      }
-    });
+    if(this.rota==='NovoFilme'||this.rota==='NovaSerie'){
+      this.isNew=true;
+    }
   }
 
   onSerieSelected(serie: Serie) {
@@ -76,7 +78,6 @@ export class MainComponent implements OnInit {
       this.route.params.subscribe(params => {
         if (params['id']) {
           this.hasId = true;
-          this.carregarSeriePorId(+params['id']); // Converte o ID para número
         }
       });
     }

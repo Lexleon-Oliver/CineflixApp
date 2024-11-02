@@ -1,6 +1,6 @@
 <div class="container">
   <h2>{{ category }}</h2>
-  @if (!seasonSelecionada && !categoriasFilmes.includes(category)) {
+  <!-- @if (!seasonSelecionada && !categoriasFilmes.includes(category)) {
     <div class="wrapper">
       @for (serie of seriesFiltradas; track $index) {
         <div>
@@ -9,9 +9,9 @@
         </div>
       }
     </div>
-  }
+  } -->
 
-  @if (seasonSelecionada) {
+  <!-- @if (seasonSelecionada) {
     <div class="wrapper">
       @for (episode of seasonSelecionada.episode; track $index) {
         <div>
@@ -20,7 +20,7 @@
         </div>
       }
     </div>
-  }
+  } -->
 
   @if (!seasonSelecionada && categoriasFilmes.includes(category)) {
     <div class="wrapper">

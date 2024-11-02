@@ -1,8 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-estrelas',
   templateUrl: './estrelas.component.html',
+  imports:[
+    CommonModule,
+  ],
+  standalone: true,
   styleUrls: ['./estrelas.component.scss']
 })
 export class EstrelasComponent implements OnInit {

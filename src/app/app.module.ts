@@ -23,6 +23,7 @@ import { UserListComponent } from './users/user-list/user-list.component';
 import { EstrelasComponent } from './main/estrelas/estrelas/estrelas.component';
 import { SelectedSerieComponent } from './main/selected-serie/selected-serie.component';
 import { RendererizaFilmeComponent } from './main/rendereriza-filme/rendereriza-filme.component';
+import { RenderizaMidiaComponent } from "./main/renderiza-midia/renderiza-midia.component";
 
 @NgModule({ declarations: [
         AppComponent,
@@ -39,14 +40,13 @@ import { RendererizaFilmeComponent } from './main/rendereriza-filme/rendereriza-
         HamburgerButtonComponent,
         NavBarComponent,
         UserListComponent,
-        EstrelasComponent,
         SelectedSerieComponent,
         RendererizaFilmeComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        ModalModule,
-        FormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ModalModule,
+    FormsModule, RenderizaMidiaComponent], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

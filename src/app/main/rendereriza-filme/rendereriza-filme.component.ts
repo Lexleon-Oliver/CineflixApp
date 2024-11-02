@@ -5,6 +5,7 @@ import { Filme } from 'src/app/midias/filme';
 import { Season } from 'src/app/midias/season';
 import { Serie } from 'src/app/midias/serie';
 import { AppService } from 'src/app/services/app.service';
+import { EstrelasComponent } from '../estrelas/estrelas/estrelas.component';
 
 @Component({
   selector: 'app-rendereriza-filme',
@@ -111,44 +112,44 @@ export class RendererizaFilmeComponent implements OnInit {
   }
 
   renderizaMidia(){
-    console.log("id: " + this.id);
-    if(this.id!==0){
-      if(this.rota === 'Início'){
-        this.getNovidade(0);
-      }else if(this.rota === 'Séries'){
-        this.ocultaBotaoAssistir=true;
-        this.getSerie(this.id);
-        setTimeout(() => {
-          this.filme=new Filme(this.id,this.serie.name,this.serie.nameBr,
-            this.serie.year,this.serie.description,this.serie.thumbnail,
-            this.serie.background,null,this.serie.genre,
-            this.serie.rating,this.serie.minAge,this.serie.time);
-          this.onSerieSelected(this.serie);
-          console.log("This serie: " + this.serie);
-          console.log("This movieRenderizado: " + this.filme);
-        }, 500);
-      }else if(this.rota === 'Filmes'){
-        this.getFilme(this.id);
-        setTimeout(()=>{
-          this.onFilmeSelected(this.filme);
-        },500);
-      }
-    }else if(this.rota==='NovoFilme'){
-      this.filme=new Filme(0,"","",
-        "","","",
-        "","/mnt/Filmes/Filmes/' '","",
-        0,0,0);
-    }else if(this.rota==='NovaSerie'){
-      this.serie = new Serie(null, null, null, null, null, null, null,null, null, null, null, null, []);
-      this.temporada= new Season(null, null, null, null, []);
-      this.episodio= new Episode(null, null, null, null, null);
-      this.filme=new Filme(this.id,this.serie.name,this.serie.nameBr,
-        this.serie.year,this.serie.description,this.serie.thumbnail,
-        this.serie.background,null,this.serie.genre,
-        this.serie.rating,this.serie.minAge,this.serie.time);
-    }else{
-      this.getNovidade(0);
-    }
+    // console.log("id: " + this.id);
+    // if(this.id!==0){
+    //   if(this.rota === 'Início'){
+    //     this.getNovidade(0);
+    //   }else if(this.rota === 'Séries'){
+    //     this.ocultaBotaoAssistir=true;
+    //     this.getSerie(this.id);
+    //     setTimeout(() => {
+    //       this.filme=new Filme(this.id,this.serie.name,this.serie.nameBr,
+    //         this.serie.year,this.serie.description,this.serie.thumbnail,
+    //         this.serie.background,null,this.serie.genre,
+    //         this.serie.rating,this.serie.minAge,this.serie.time);
+    //       this.onSerieSelected(this.serie);
+    //       console.log("This serie: " + this.serie);
+    //       console.log("This movieRenderizado: " + this.filme);
+    //     }, 500);
+    //   }else if(this.rota === 'Filmes'){
+    //     this.getFilme(this.id);
+    //     setTimeout(()=>{
+    //       this.onFilmeSelected(this.filme);
+    //     },500);
+    //   }
+    // }else if(this.rota==='NovoFilme'){
+    //   this.filme=new Filme(0,"","",
+    //     "","","",
+    //     "","/mnt/Filmes/Filmes/' '","",
+    //     0,0,0);
+    // }else if(this.rota==='NovaSerie'){
+    //   this.serie = new Serie(null, null, null, null, null, null, null,null, null, null, null, null, []);
+    //   this.temporada= new Season(null, null, null, null, []);
+    //   this.episodio= new Episode(null, null, null, null, null);
+    //   this.filme=new Filme(this.id,this.serie.name,this.serie.nameBr,
+    //     this.serie.year,this.serie.description,this.serie.thumbnail,
+    //     this.serie.background,null,this.serie.genre,
+    //     this.serie.rating,this.serie.minAge,this.serie.time);
+    // }else{
+    //   this.getNovidade(0);
+    // }
   }
 
   getNovidade(page: number){
@@ -392,5 +393,3 @@ export class RendererizaFilmeComponent implements OnInit {
 
 
 }
-
-

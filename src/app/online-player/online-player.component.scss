@@ -1,0 +1,12 @@
+#SuperFlixAPIContainerVideo {
+  position: relative;
+  width: 100vw; /* Largura total da viewport */
+  height: 100vh; /* Altura total da viewport */
+  overflow: hidden; /* Esconde o que está fora do contêiner */
+}
+
+iframe {
+  width: 100%; /* Largura total do contêiner */
+  height: 100%; /* Altura total do contêiner */
+  border: none; /* Remove bordas do iframe */
+}

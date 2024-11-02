@@ -1,9 +1,9 @@
-@if (filme) {
-  <div class="container filmeContainer" [ngStyle]="{ 'background-image': 'url(' + filme.background+ ')', 'background-size': 'cover', 'background-position': 'center center' }">
+@if (filmeBanner) {
+  <div class="container filmeContainer" [ngStyle]="{ 'background-image': 'url(' + filmeBanner.background+ ')', 'background-size': 'cover', 'background-position': 'center center' }">
     <div class="overlay"></div>
     <div class="containerMain">
       <section class="containerImgName">
-        <h2 class="titleFilme">{{filme.nameBr}}</h2>
+        <h2 class="titleFilme">{{filmeBanner.nameBr}}</h2>
       </section>
       <section>
         <div class="topBrasil">
@@ -13,25 +13,25 @@
           <p class="topDez2">Lançamentos</p>
         </div>
         <div class="modal-infos">
-          @if (filme.year) {
+          @if (filmeBanner.year) {
             <div class="modal-infos-year">
-              {{ filme.year }}
+              {{ filmeBanner.year }}
             </div>
           }
-          @if (filme.minAge) {
+          @if (filmeBanner.minAge) {
             <div class="modal-infos-minAge"
             [ngClass]="{
-              'min-ageAll': filme.minAge < 13,
-              'min-age13': filme.minAge >= 13 && filme.minAge < 16,
-              'min-age16': filme.minAge >= 16 && filme.minAge < 18,
-              'min-age18': filme.minAge >= 18}"
+              'min-ageAll': filmeBanner.minAge < 13,
+              'min-age13': filmeBanner.minAge >= 13 && filmeBanner.minAge < 16,
+              'min-age16': filmeBanner.minAge >= 16 && filmeBanner.minAge < 18,
+              'min-age18': filmeBanner.minAge >= 18}"
             >
-              <p>{{ filme.minAge }}</p>
+              <p>{{ filmeBanner.minAge }}</p>
             </div>
           }
-          @if (filme.time) {
+          @if (filmeBanner.time) {
             <div class="modal-infos-time">
-              {{ secondsToHms(filme.time) }}
+              {{ secondsToHms(filmeBanner.time) }}
             </div>
           }
         </div>
@@ -39,33 +39,41 @@
           <div class="modal-details-item">
             <div>
               <span>Gênero:&nbsp;</span>
-              {{ filme.genre }}
+              {{ filmeBanner.genre }}
             </div>
           </div>
         </div>
         <div class="containerDescrip">
           <p>
-            {{filme.description}}
+            {{filmeBanner.description}}
           </p>
-          <!-- <app-estrelas [rating]="filme.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas> -->
-          @if (rota !== 'NovoFilme' && rota !== 'NovaSerie') {
+          <app-estrelas [rating]="filmeBanner.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
+          <!-- @if (rota !== 'NovofilmeBanner' && rota !== 'NovaSerie') { -->
             <div class="btnContainer">
-              @if (!ocultaBotaoAssistir) {
-                <button class="btn1"  (click)="abrirPlayer(filme)"><i class="fa-solid fa fa-play"></i><p>Assistir</p></button>
-              }
-              <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
-              @if (id!==0 && rota!== 'Início') {
+              <!-- @if (!ocultaBotaoAssistir) { -->
+                <button class="btn1"  (click)="abrirPlayer(filmeBanner)"><i class="fa-solid fa fa-play"></i><p>Assistir Offline</p></button>
+                <button class="btn5"  (click)="abrirPlayerOnline()"><i class="fa-solid fa fa-play"></i><p>Assistir Online</p></button>
+              <!-- } -->
+              <!-- <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button> -->
+              <!-- @if (id!==0 && rota!== 'Início') {
                 <button class="btn4" (click)="editar()"><i class="fa-solid fa-pen-to-square"></i><p>Editar</p></button>
-              }
-              @if (id!==0 && rota=== 'Filmes') {
+              } -->
+              <!-- @if (id!==0 && rota=== 'Filmes') {
                 <button class="btn3" (click)="remover()"><i class="fa-solid fa-trash"></i><p>Remover</p></button>
-              }
+              } -->
             </div>
-          }
+          <!-- } -->
 
         </div>
       </section>
-      @if ((rota === 'NovoFilme'|| rota === 'NovaSerie') || modoEdicao) {
+      @if (assistirOnline) {
+        <app-online-player
+          [type]="'filme'"
+          [imdb]="filmeBanner.tmdb">
+        </app-online-player>
+
+      }
+      <!-- @if ((rota === 'NovoFilme'|| rota === 'NovaSerie') || modoEdicao) {
         <section class="form-container cadastro" >
           @if (!modoEdicao) {
             <h2 class="tituloCadastro">Cadastrar</h2>
@@ -156,8 +164,9 @@
             <button type="button" class="btnNetflix" (click)="salvar()">Salvar</button>
           </section>
         </section>
-      }
+      } -->
     </div>
   </div>
 }
+
 
