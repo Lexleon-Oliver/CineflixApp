@@ -1,4 +1,4 @@
-import { AppService, serie } from './../../services/app.service';
+import { AppService } from './../../services/app.service';
 import { Serie } from 'src/app/midias/serie';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -71,6 +71,6 @@ export class SelectedSerieComponent implements OnInit {
       console.error('Erro ao executar filme', erro);
     });
   }
-    
+
 
 }

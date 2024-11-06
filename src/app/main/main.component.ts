@@ -14,8 +14,8 @@ import { AppService } from '../services/app.service';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  @Input() serieSelecionada: Serie;
-  @Input() filmeSelecionado: Filme;
+  // @Input() serieSelecionada: Serie;
+  // @Input() filmeSelecionado: Filme;
   categoriasFilmes: string[]=[
     "NOVIDADES","ÚLTIMOS ADICIONADOS","FILMES","CLÁSSICOS","AÇÃO","ANIMAÇÃO",
     "AVENTURA","COMÉDIA","DRAMA","FAMÍLIA","FANTASIA","FICÇÃO CIENTÍFICA","ROMANCE","TERROR"
@@ -51,7 +51,7 @@ export class MainComponent implements OnInit {
   }
 
   onFilmeSelected(filme: Filme) {
-    this.filmeSelecionado= filme;
+    // this.filmeSelecionado= filme;
   }
 
   verificarNovo() {
@@ -61,7 +61,7 @@ export class MainComponent implements OnInit {
   }
 
   onSerieSelected(serie: Serie) {
-    this.serieSelecionada=serie;
+    // this.serieSelecionada=serie;
   }
 
     // Função para definir a rota
@@ -77,22 +77,24 @@ export class MainComponent implements OnInit {
     private observarMudancasDeParametros() {
       this.route.params.subscribe(params => {
         if (params['id']) {
+          console.log(params['id']);
+
           this.hasId = true;
         }
       });
     }
 
-    // Função para carregar a série pelo ID
-    private carregarSeriePorId(id: number) {
-      this.appService.getSerieById(id).subscribe(
-        serie => {
-          this.serieSelecionada = serie;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+    // // Função para carregar a série pelo ID
+    // private carregarSeriePorId(id: number) {
+    //   this.appService.getSerieById(id).subscribe(
+    //     serie => {
+    //       this.serieSelecionada = serie;
+    //     },
+    //     error => {
+    //       console.log(error);
+    //     }
+    //   );
+    // }
 
 }
 

@@ -12,7 +12,9 @@ export class NavbuttonComponent implements OnInit {
   @Input() route: string = ''
   @Input() checked: string = ''
 
-  constructor(private router:Router) { }
+  constructor(
+    private router:Router,
+  ) { }
 
   ngOnInit(): void {
   }

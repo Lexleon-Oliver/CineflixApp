@@ -12,7 +12,9 @@
                 <h2 class="brand__logo">CINEFLIX</h2>
                 <ul class="buttonsContainer">
                     <li *ngFor="let item of navButtons.mainButtons" (click)="setSelectedMenu(item.text)"
-                    [ngClass]="{'selected': selectedMenu === item.text}"><app-nav-button [text]="item.text" [checked]="item.checked" [radioGroup]="'navButtons'"></app-nav-button></li>
+                    [ngClass]="{'selected': selectedMenu === item.text}">
+                      <app-nav-button [text]="item.text" [checked]="item.checked" [radioGroup]="'navButtons'"></app-nav-button>
+                    </li>
                 </ul>
             </div>
             <div class="profileContainer">

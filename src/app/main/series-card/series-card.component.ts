@@ -1,4 +1,4 @@
-import { AppService, serie } from '../../services/app.service';
+import { AppService } from '../../services/app.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Episode } from 'src/app/midias/episode';
@@ -89,6 +89,8 @@ export class SeriesCardComponent implements OnInit {
     this.router.navigate(['/series', this.serieObj.id]);
   }
   assistirFilme(): void {
+    this.appService.rota = '/filmes';
+    this.appService.setIdSelecionado(this.filmeObj.id);
     this.router.navigate(['/filmes', this.filmeObj.id]);
   }
 

@@ -33,8 +33,13 @@ export class NavBarMainComponent implements OnInit {
   @Output() onSearch = new EventEmitter<string>();
   @Output() onMenuChange = new EventEmitter<string>();
 
-  constructor(private userService:UserInMainService, private route: Router,
-    private scrollService: WindowScrollService, private rotaAtiva: ActivatedRoute) {
+  constructor(
+    private userService:UserInMainService,
+    private route: Router,
+    private scrollService: WindowScrollService,
+    private appService:AppService,
+    private rotaAtiva: ActivatedRoute
+  ) {
     this.userLoggedIn()
     this.getScreenSize();
     this.scrollY$ = this.scrollService.scrollY$;
@@ -69,12 +74,17 @@ export class NavBarMainComponent implements OnInit {
 
   setSelectedMenu(text: string): void {
     this.selectedMenu = text;
-    if (this.selectedMenu=='Início'){
-      this.route.navigate(['main',this.userLogged.id])
-    }else if(this.selectedMenu=='Séries'){
-      this.route.navigate(['series']);
-    }else if(this.selectedMenu=='Filmes'){
-      this.route.navigate(['filmes']);
+    const routes = {
+      'Início': ['main', this.userLogged.id],
+      'Séries': ['series'],
+      'Filmes': ['filmes']
+    };
+    const selectedRoute = routes[this.selectedMenu];
+    if (selectedRoute) {
+      if (this.selectedMenu !== 'Início') {
+        this.appService.setIdSelecionado(0);
+      }
+      this.route.navigate(selectedRoute);
     }
   }
 
