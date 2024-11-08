@@ -36,6 +36,8 @@ export class AppService {
 
   setIdSelecionado(id:number){
     this.idSelecionado = id;
+    console.log(" this.idSelecionado: ",id);
+
   }
 
   getIdSelecionado():number{
@@ -85,6 +87,10 @@ export class AppService {
     return this.httpClient.get<Filme[]>(`${this.APIFILMES}?page=${page}`)
   }
 
+  getFilmesList():Filme[]{
+    return this.filmesSubject.getValue();
+  }
+
   getFilmeById(id: number){
     return this.httpClient.get<Filme>(`${this.APIFILMES}/${id}`)
   }
@@ -93,12 +99,16 @@ export class AppService {
     return this.httpClient.get<Filme[]>(`${this.APIFILMES}/recents?page=${page}`);
   }
 
-  getNovidades(): Filme[] {
+  getNovidadesList(): Filme[] {
     return this.novidadesSubject.getValue();
   }
 
   getUltimosAdicionados(){
     return this.httpClient.get<Filme[]>(`${this.APIFILMES}/last`)
+  }
+
+  getUltimosList():Filme[]{
+    return this.ultimosSubject.getValue();
   }
 
   removerSerie(id: number){
@@ -131,7 +141,7 @@ export class AppService {
   carregarNovidades() {
     console.log("carregarNovidades()");
 
-    const novidadesEmSubject = this.getNovidades();
+    const novidadesEmSubject = this.getNovidadesList();
 
     // Verifica se os filmes estão sincronizados
     if (novidadesEmSubject.length > 0 && this.verificarSincronizacao(novidadesEmSubject, this.LOCAL_STORAGE_NOVIDADES)) {
@@ -169,7 +179,6 @@ export class AppService {
 
   carregarFilmes() {
     const filmesEmSubject = this.filmesSubject.getValue();
-
     // Verifica se os filmes estão sincronizados
     if (filmesEmSubject.length > 0 && this.verificarSincronizacao(filmesEmSubject, this.LOCAL_STORAGE_FILMES)) {
         console.log("Filmes já estão disponíveis e sincronizadas. Nenhuma requisição necessária.");
@@ -204,6 +213,16 @@ export class AppService {
   atualizarNovidades(novidadesAtualizadas: Filme[]): void {
     this.novidadesSubject.next(novidadesAtualizadas);
     localStorage.setItem(this.LOCAL_STORAGE_NOVIDADES, JSON.stringify(novidadesAtualizadas));
+  }
+
+  atualizarUltimos(ultimosAtualizados: Filme[]):void{
+    this.ultimosSubject.next(ultimosAtualizados);
+    localStorage.setItem(this.LOCAL_STORAGE_RECENTES, JSON.stringify(ultimosAtualizados));
+  }
+
+  atualizarFilmes(filmesAtualizados: Filme[]):void{
+    this.filmesSubject.next(filmesAtualizados);
+    localStorage.setItem(this.LOCAL_STORAGE_FILMES,JSON.stringify(filmesAtualizados));
   }
 
   carregarRecentes(){

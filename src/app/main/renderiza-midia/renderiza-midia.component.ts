@@ -47,9 +47,10 @@ export class RenderizaMidiaComponent implements OnInit{
 
   renderizarBanner(){
     console.log("Renderizar banner");
-    if(this.id!==0 && this.rota!=='Início'){
+    console.log("Id Selecionado: ",this.appService.getIdSelecionado());
+    if(this.appService.getIdSelecionado()!==0 && this.rota!=='Início'){
       if(this.rota ==='Filmes'){
-        this.appService.getFilmeById(this.id).subscribe({
+        this.appService.getFilmeById(this.appService.getIdSelecionado()).subscribe({
           next: (response: Filme)=>{
             this.filmeBanner=response;
           },
@@ -102,31 +103,29 @@ export class RenderizaMidiaComponent implements OnInit{
     this.appService.removerFilme(this.filmeBanner.id).subscribe({
       next: response => {
         console.log('Filme removido com sucesso:', response);
-
-        // Remover o filme da lista de novidades e atualizar o BehaviorSubject e o localStorage
-        const novidadesAtualizadas = this.appService.getNovidades().filter(
-          filme => filme.id !== this.filmeBanner.id
-        );
-        this.appService.atualizarNovidades(novidadesAtualizadas);
-
-        // Recarregar as novidades
+        this.atualizarListasFilmeRemovido(this.filmeBanner.id);
+        this.appService.setIdSelecionado(0);
         this.appService.carregarNovidades();
 
-        // Timeout para esperar a finalização do carregamento
-        setTimeout(() => {
-          console.log("Executado após 2 segundos");
+        // Usando setInterval para checar continuamente o estado de carregamento
+        const intervalId = setInterval(() => {
+          console.log("Checando estado de loading...");
+
           if (!this.appService.isLoading()) {
             console.log("Loading finalizado. Renderizando banner.");
+            clearInterval(intervalId); // Limpa o intervalo assim que o carregamento estiver completo
             this.renderizarBanner();
             this.router.navigate(['filmes']);
           } else {
-            console.log("Loading não finalizado. Erro.");
+            console.log("Loading não finalizado. Aguardando...");
           }
-        }, 2000);
+        }, 500); // Checa a cada 500 ms. Ajuste o tempo conforme necessário.
       },
       error: error => console.error('Erro ao remover filme:', error)
     });
+
   }
+
 
   salvar() {
     this.modoEdicao= false;
@@ -163,5 +162,16 @@ export class RenderizaMidiaComponent implements OnInit{
 
   private handleError(erro: any): void {
       console.error('Erro ao executar filme', erro);
+  }
+
+  private atualizarListasFilmeRemovido(filmeId: number) {
+    const atualizarLista = (getList: () => Filme[], updateList: (filmes: Filme[]) => void) => {
+      const filmesAtualizados = getList().filter(filme => filme.id !== filmeId);
+      updateList(filmesAtualizados);
+    };
+
+    atualizarLista(this.appService.getNovidadesList.bind(this.appService), this.appService.atualizarNovidades.bind(this.appService));
+    atualizarLista(this.appService.getUltimosList.bind(this.appService), this.appService.atualizarUltimos.bind(this.appService));
+    atualizarLista(this.appService.getFilmesList.bind(this.appService), this.appService.atualizarFilmes.bind(this.appService));
   }
 }
