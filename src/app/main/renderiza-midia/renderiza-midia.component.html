@@ -48,7 +48,7 @@
             {{filmeBanner.description}}
           </p>
           <app-estrelas [rating]="filmeBanner.rating" (onRatingChange)="onRatingChanged($event)"></app-estrelas>
-          <!-- @if (rota !== 'NovofilmeBanner' && rota !== 'NovaSerie') { -->
+          @if (rota !== 'NovoFilme') {
             <div class="btnContainer">
               <!-- @if (!ocultaBotaoAssistir) { -->
                 <button class="btn1"  (click)="abrirPlayer(filmeBanner)"><i class="fa-solid fa fa-play"></i><p>Assistir Offline</p></button>
@@ -64,18 +64,24 @@
                 }
               }
             </div>
-          <!-- } -->
+           }
 
         </div>
       </section>
-      <!--  @if ((rota === 'NovoFilme'|| rota === 'NovaSerie') || modoEdicao) { -->
-      @if (modoEdicao) {
+      @if (assistirOnline) {
+        <app-online-player
+          [type]="'filme'"
+          [imdb]="filmeBanner.tmdb">
+        </app-online-player>
+
+      }
+      @if (modoEdicao|| rota === 'NovoFilme') {
         <section class="form-container cadastro" >
-          <!-- @if (!modoEdicao) {
+           @if (!modoEdicao) {
             <h2 class="tituloCadastro">Cadastrar</h2>
-          }@else { -->
+          }@else {
             <h2 class="tituloCadastro">Editar</h2>
-          <!-- } -->
+         }
           <div class="form-column cadastrar">
             <div class="form-column" >
               <!-- @if (rota === 'NovaSerie' || rota==='Séries') {

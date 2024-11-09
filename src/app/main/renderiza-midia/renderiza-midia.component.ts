@@ -60,6 +60,8 @@ export class RenderizaMidiaComponent implements OnInit{
           }
         });
       }
+    }else if(this.rota==='NovoFilme'){
+      this.filmeBanner = new Filme(0, "", "", "", "", "", "", "", "","",0,0,0);
     }else{
       this.novidades$.subscribe(filmes => {
         if (filmes.length > 0) {
@@ -129,13 +131,28 @@ export class RenderizaMidiaComponent implements OnInit{
 
 
   salvar() {
-    this.modoEdicao= false;
-    const item = this.filmeBanner;
-    if (item) {
-      this.appService.atualizarFilme(item).subscribe({
-        next: response => console.log('Filme atualizado com sucesso:', response),
-        error: err => console.error('Erro ao atualizar filme:', err)
-      });
+    if(this.modoEdicao){
+      this.modoEdicao= false;
+      const item = this.filmeBanner;
+      if (item) {
+        this.appService.atualizarFilme(item).subscribe({
+          next: response => console.log('Filme atualizado com sucesso:', response),
+          error: err => console.error('Erro ao atualizar filme:', err)
+        });
+      }
+
+    }else{
+      console.log("Filme", this.filmeBanner);
+      const item = this.filmeBanner;
+      if (item) {
+        this.appService.cadastrarFilme(item).subscribe({
+          next: response => {
+            console.log('Filme adicionado com sucesso:', response)
+            this.router.navigate(['filmes']);
+          },
+          error: err => console.error('Erro ao atualizar filme:', err)
+        });
+      }
     }
   }
 
