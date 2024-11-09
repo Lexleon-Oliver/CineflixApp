@@ -52,7 +52,7 @@
             <div class="btnContainer">
               <!-- @if (!ocultaBotaoAssistir) { -->
                 <button class="btn1"  (click)="abrirPlayer(filmeBanner)"><i class="fa-solid fa fa-play"></i><p>Assistir Offline</p></button>
-                <button class="btn5"  (click)="abrirPlayerOnline()"><i class="fa-solid fa fa-play"></i><p>Assistir Online</p></button>
+                <button class="btn5"  (click)="playVideo(nomeVideo)"><i class="fa-solid fa fa-play"></i><p>Assistir Online</p></button>
               <!-- } -->
               <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
               @if (id!==0) {
@@ -68,13 +68,6 @@
 
         </div>
       </section>
-      @if (assistirOnline) {
-        <app-online-player
-          [type]="'filme'"
-          [imdb]="filmeBanner.tmdb">
-        </app-online-player>
-
-      }
       <!--  @if ((rota === 'NovoFilme'|| rota === 'NovaSerie') || modoEdicao) { -->
       @if (modoEdicao) {
         <section class="form-container cadastro" >

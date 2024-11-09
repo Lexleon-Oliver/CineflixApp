@@ -1,30 +1,37 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SafeUrlPipe } from "../pipes/safe-url.pipe";
-
+import {IMediaElement, VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 @Component({
   selector: 'app-online-player',
   standalone: true,
-  imports: [SafeUrlPipe],
+  imports: [
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    // SafeUrlPipe
+  ],
   templateUrl: './online-player.component.html',
   styleUrl: './online-player.component.scss'
 })
 export class OnlinePlayerComponent implements OnInit{
 
-  @Input() type: string = 'serie';  // 'filme' ou 'serie'
-  @Input() imdb: string = '';       // ID do IMDB ou TMDB
-  @Input() season?: string;         // Temporada (opcional para filmes)
-  @Input() episode?: string;        // Episódio (opcional para filmes)
-  iframeSrc: string = '';
+  @Input() videoUrl: string | null = null;
+  videoError: boolean = false;
+
+  constructor(){
+  }
+
+  onError() {
+    this.videoError = true;
+  }
 
 
   ngOnInit(): void {
-    this.updateIframeSrc();
+
   }
 
-  updateIframeSrc() {
-    // Constrói a URL do iframe baseado nos inputs
-    const seasonPath = this.season ? `/${this.season}` : '';
-    const episodePath = this.episode ? `/${this.episode}` : '';
-    this.iframeSrc = `https://superflixapi.dev/${this.type}/${this.imdb}${seasonPath}${episodePath}`;
-  }
 }

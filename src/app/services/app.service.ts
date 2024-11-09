@@ -25,6 +25,7 @@ export class AppService {
   private filmesSubject = new BehaviorSubject<Filme[]>([]);
   private loading = false;
   private idSelecionado:number = 0;
+  private urlMidia:string;
 
   novidades$ = this.novidadesSubject.asObservable();
   ultimos$ = this.ultimosSubject.asObservable();
@@ -37,7 +38,14 @@ export class AppService {
   setIdSelecionado(id:number){
     this.idSelecionado = id;
     console.log(" this.idSelecionado: ",id);
+  }
 
+  getUrlMidia(): string{
+    return this.urlMidia;
+  }
+
+  setUrlMidia(url:string){
+    this.urlMidia = url;
   }
 
   getIdSelecionado():number{

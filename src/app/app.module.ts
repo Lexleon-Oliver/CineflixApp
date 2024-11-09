@@ -24,29 +24,41 @@ import { EstrelasComponent } from './main/estrelas/estrelas/estrelas.component';
 import { SelectedSerieComponent } from './main/selected-serie/selected-serie.component';
 import { RendererizaFilmeComponent } from './main/rendereriza-filme/rendereriza-filme.component';
 import { RenderizaMidiaComponent } from "./main/renderiza-midia/renderiza-midia.component";
+import { OnlinePlayerComponent } from './online-player/online-player.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        HomeComponent,
-        UsersComponent,
-        MainComponent,
-        UserCardComponent,
-        NavBarMainComponent,
-        NavbuttonComponent,
-        SeriesCardComponent,
-        CategoryCarrouselComponent,
-        ErrorComponentComponent,
-        NavBarHamburgerMenuComponent,
-        HamburgerButtonComponent,
-        NavBarComponent,
-        UserListComponent,
-        SelectedSerieComponent,
-        RendererizaFilmeComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    UsersComponent,
+    MainComponent,
+    UserCardComponent,
+    NavBarMainComponent,
+    NavbuttonComponent,
+    SeriesCardComponent,
+    CategoryCarrouselComponent,
+    ErrorComponentComponent,
+    NavBarHamburgerMenuComponent,
+    HamburgerButtonComponent,
+    NavBarComponent,
+    UserListComponent,
+    SelectedSerieComponent,
+    RendererizaFilmeComponent,
+  ],
+  bootstrap: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ModalModule,
-    FormsModule, RenderizaMidiaComponent], providers: [provideHttpClient(withInterceptorsFromDi())] })
+    FormsModule,
+    RenderizaMidiaComponent,
+    OnlinePlayerComponent,
+  ],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ] })
 export class AppModule { }

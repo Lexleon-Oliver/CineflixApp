@@ -1,6 +1,12 @@
 <div class="container">
     <app-nav-bar-main (onSearch)="onSearch($event)"></app-nav-bar-main>
     <app-renderiza-midia [rota]="rota"></app-renderiza-midia>
+    @if (appService.getUrlMidia()) {
+      <app-online-player
+      [videoUrl]="appService.getUrlMidia()">
+      </app-online-player>
+
+    }
     <!-- <app-rendereriza-filme [rota]="rota" (serieSelecionada)="onSerieSelected($event)" (filmeSelecionado)="onFilmeSelected($event)"></app-rendereriza-filme> -->
     <!-- @if (rota==='Séries' && !hasId) {
       <div class="cardsDisplacement">

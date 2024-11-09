@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
 
   constructor(private userService:UserInMainService,
     private route: ActivatedRoute,
-    private appService: AppService) { }
+    public appService: AppService) { }
 
 
   ngOnInit(): void {
@@ -39,6 +39,7 @@ export class MainComponent implements OnInit {
     this.definirRota();
     this.observarMudancasDeParametros();
     this.verificarNovo();
+    this.appService.setUrlMidia("");
     console.log("usuario: ", this.user);
     console.log("rota: ", this.rota);
     console.log("novo: ", this.isNew);

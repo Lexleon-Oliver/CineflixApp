@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     EstrelasComponent,
-    OnlinePlayerComponent,
     FormsModule,
   ],
   templateUrl: './renderiza-midia.component.html',
@@ -29,6 +28,8 @@ export class RenderizaMidiaComponent implements OnInit{
   id: number = 0;
   assistirOnline: boolean = false;
   modoEdicao:boolean= false;
+  videoUrl: string | null = null;
+  nomeVideo:string = "Aracnofobia.mp4";
 
   constructor(
     private appService: AppService,
@@ -90,8 +91,8 @@ export class RenderizaMidiaComponent implements OnInit{
     });
   }
 
-  abrirPlayerOnline(){
-    this.assistirOnline = true;
+  playVideo(filename: string) {
+    this.appService.setUrlMidia(`http://localhost:8080/api/stream?filename=${filename}`);
   }
 
   editar() {
