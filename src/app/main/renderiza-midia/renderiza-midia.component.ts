@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, take } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Filme } from 'src/app/midias/filme';
 import { AppService } from 'src/app/services/app.service';
 import { EstrelasComponent } from '../estrelas/estrelas/estrelas.component';
-import { OnlinePlayerComponent } from 'src/app/online-player/online-player.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
