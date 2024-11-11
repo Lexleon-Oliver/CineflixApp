@@ -28,7 +28,7 @@ export class RenderizaMidiaComponent implements OnInit{
   assistirOnline: boolean = false;
   modoEdicao:boolean= false;
   videoUrl: string | null = null;
-  nomeVideo:string = "Aracnofobia.mp4";
+  nomeVideo:string = "";
 
   constructor(
     private appService: AppService,
@@ -45,6 +45,14 @@ export class RenderizaMidiaComponent implements OnInit{
     this.renderizarBanner();
   }
 
+  setNomeVideo() {
+    if(this.filmeBanner.storage){
+      this.nomeVideo = this.filmeBanner.storage.split('\\').pop();
+      console.log("Nome do arquivo: ", this.nomeVideo);
+
+    }
+  }
+
   renderizarBanner(){
     console.log("Renderizar banner");
     console.log("Id Selecionado: ",this.appService.getIdSelecionado());
@@ -53,6 +61,7 @@ export class RenderizaMidiaComponent implements OnInit{
         this.appService.getFilmeById(this.appService.getIdSelecionado()).subscribe({
           next: (response: Filme)=>{
             this.filmeBanner=response;
+            this.setNomeVideo();
           },
           error: (error) =>{
             console.error("Erro ao buscar por filme: ", error);
@@ -65,6 +74,7 @@ export class RenderizaMidiaComponent implements OnInit{
       this.novidades$.subscribe(filmes => {
         if (filmes.length > 0) {
           this.filmeBanner = this.escolherFilmeAleatorio(filmes);
+          this.setNomeVideo();
         }
       });
     }
@@ -192,3 +202,5 @@ export class RenderizaMidiaComponent implements OnInit{
     atualizarLista(this.appService.getFilmesList.bind(this.appService), this.appService.atualizarFilmes.bind(this.appService));
   }
 }
+
+
