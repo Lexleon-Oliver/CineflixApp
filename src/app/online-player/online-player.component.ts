@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SafeUrlPipe } from "../pipes/safe-url.pipe";
-import {IMediaElement, VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
@@ -12,7 +11,6 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    // SafeUrlPipe
   ],
   templateUrl: './online-player.component.html',
   styleUrl: './online-player.component.scss'

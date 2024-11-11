@@ -68,13 +68,6 @@
 
         </div>
       </section>
-      @if (assistirOnline) {
-        <app-online-player
-          [type]="'filme'"
-          [imdb]="filmeBanner.tmdb">
-        </app-online-player>
-
-      }
       @if (modoEdicao|| rota === 'NovoFilme') {
         <section class="form-container cadastro" >
            @if (!modoEdicao) {

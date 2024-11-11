@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, take } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Filme } from 'src/app/midias/filme';
 import { AppService } from 'src/app/services/app.service';
 import { EstrelasComponent } from '../estrelas/estrelas/estrelas.component';
-import { OnlinePlayerComponent } from 'src/app/online-player/online-player.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -29,7 +28,7 @@ export class RenderizaMidiaComponent implements OnInit{
   assistirOnline: boolean = false;
   modoEdicao:boolean= false;
   videoUrl: string | null = null;
-  nomeVideo:string = "Aracnofobia.mp4";
+  nomeVideo:string = "";
 
   constructor(
     private appService: AppService,
@@ -46,6 +45,14 @@ export class RenderizaMidiaComponent implements OnInit{
     this.renderizarBanner();
   }
 
+  setNomeVideo() {
+    if(this.filmeBanner.storage){
+      this.nomeVideo = this.filmeBanner.storage.split('\\').pop();
+      console.log("Nome do arquivo: ", this.nomeVideo);
+
+    }
+  }
+
   renderizarBanner(){
     console.log("Renderizar banner");
     console.log("Id Selecionado: ",this.appService.getIdSelecionado());
@@ -54,6 +61,7 @@ export class RenderizaMidiaComponent implements OnInit{
         this.appService.getFilmeById(this.appService.getIdSelecionado()).subscribe({
           next: (response: Filme)=>{
             this.filmeBanner=response;
+            this.setNomeVideo();
           },
           error: (error) =>{
             console.error("Erro ao buscar por filme: ", error);
@@ -66,6 +74,7 @@ export class RenderizaMidiaComponent implements OnInit{
       this.novidades$.subscribe(filmes => {
         if (filmes.length > 0) {
           this.filmeBanner = this.escolherFilmeAleatorio(filmes);
+          this.setNomeVideo();
         }
       });
     }
@@ -193,3 +202,5 @@ export class RenderizaMidiaComponent implements OnInit{
     atualizarLista(this.appService.getFilmesList.bind(this.appService), this.appService.atualizarFilmes.bind(this.appService));
   }
 }
+
+
