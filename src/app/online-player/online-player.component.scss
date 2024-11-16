@@ -1,106 +1,99 @@
-/* Container principal */
-.player-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #111;
-  border-radius: 8px;
-  padding: 16px;
-  max-width: 800px;
-  margin: auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
+// .player-container {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   background-color: #111;
+//   border-radius: 8px;
+//   padding: 16px;
+//   max-width: 800px;
+//   margin: auto;
+//   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 
-/* Título */
-.player-container h3 {
-  color: #fff;
-  font-size: 18px;
-  margin-bottom: 8px;
-}
+  h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
 
-/* Videogular player */
-vg-player {
-  width: 100%;
-  max-height: 500px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
+//   vg-player {
+//     width: 100%;
+//     max-height: 500px;
+//     border-radius: 8px;
+//     overflow: hidden;
+//     position: relative;
+//   }
 
-/* Controles do player */
-vg-controls {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 8px;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 0 0 8px 8px;
-}
+//   vg-controls {
+//     display: flex;
+//     justify-content: space-around;
+//     align-items: center;
+//     padding: 8px;
+//     background-color: rgba(0, 0, 0, 0.7);
+//     border-radius: 0 0 8px 8px;
+//   }
 
-/* Ícones e botões */
-vg-play-pause,
-vg-playback-button,
-vg-mute,
-vg-volume,
-vg-fullscreen {
-  color: #fff;
-  font-size: 16px;
-  transition: color 0.3s;
-  cursor: pointer;
-}
+  /* Estilo dos ícones e botões */
+  vg-play-pause,
+  vg-playback-button,
+  vg-mute,
+  vg-volume,
+  vg-fullscreen {
+    color: red;
+    font-size: 16px;
+    transition: color 0.3s;
+    cursor: pointer;
 
-vg-play-pause:hover,
-vg-playback-button:hover,
-vg-mute:hover,
-vg-volume:hover,
-vg-fullscreen:hover {
-  color: #4caf50; /* Cor ao passar o mouse */
-}
+    &:hover {
+      color: #4caf50; /* Cor ao passar o mouse */
+    }
+  }
 
-/* Barra de progresso */
-vg-scrub-bar {
-  position: relative;
-  width: 100%;
-  height: 8px;
-  background: #333;
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-}
+//   /* Barra de progresso */
+//   ::ng-deep vg-scrub-bar {
+//     position: relative;
+//     width: 100%;
+//     height: 8px;
+//     background-color: #e0e0e0; /* Cor para a parte ainda não assistida */
+//     border-radius: 4px;
+//     overflow: hidden;
+//     cursor: pointer;
+//   }
 
-vg-scrub-bar-current-time {
-  background: #4caf50; /* Cor do progresso */
-  height: 100%;
-}
+//   ::ng-deep vg-scrub-bar > div {
+//     background-color: #3498db !important; /* Cor para a parte assistida */
+//     height: 100%;
+//     border-radius: 4px;
+//   }
 
-/* Tempo e texto */
-vg-time-display {
-  color: #ccc;
-  font-size: 14px;
-  margin: 0 8px;
-}
+  /* Estilo do tempo e texto */
+  vg-time-display {
+    color: #ccc;
+    font-size: 14px;
+    margin: 0 8px;
+  }
 
-/* Volume */
-vg-volume {
-  display: flex;
-  align-items: center;
-}
+//   /* Volume */
+//   vg-volume {
+//     display: flex;
+//     align-items: center;
 
-vg-volume:hover {
-  color: #4caf50;
-}
+//     &:hover {
+//       color: #4caf50;
+//     }
+//   }
 
-/* Mensagem de erro */
-.error-message {
-  color: #ff4c4c;
-  font-size: 14px;
-  margin-top: 8px;
-}
+//   /* Mensagem de erro */
+//   .error-message {
+//     color: #ff4c4c;
+//     font-size: 14px;
+//     margin-top: 8px;
+//   }
 
-.player-container vg-controls vg-play-pause {
-  color: red; /* Muda a cor do ícone de play para vermelho */
-}
+  // vg-play-pause {
+  //   color: red; /* Muda a cor do ícone de play para vermelho */
+  // }
 
-.player-container vg-controls vg-mute {
-  fill: blue; /* Muda a cor do ícone de mute para azul, se for um SVG */
-}
+  // vg-mute {
+  //   fill: blue; /* Muda a cor do ícone de mute para azul, se for um SVG */
+  // }
+

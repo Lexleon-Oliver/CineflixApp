@@ -1,12 +1,32 @@
-# Use a imagem oficial do Nginx como base
-FROM nginx:latest
+# Use a imagem base do Node.js
+FROM node:20-alpine
 
-# Copie os arquivos estáticos do aplicativo Angular para o diretório de conteúdo do Nginx
-COPY dist/Netflix /usr/share/nginx/html
+# Defina o diretório de trabalho para a aplicação Angular
+WORKDIR /app
 
-# Copie o arquivo de configuração personalizado do Nginx para o contêiner
+# Copie os arquivos de dependência do pacote para o contêiner
+COPY package*.json ./
+
+# Instale as dependências do pacote
+RUN npm install
+
+# Copie todos os arquivos da aplicação Angular para o contêiner
+COPY . .
+
+# Execute o comando para construir a aplicação Angular
+RUN npm run build
+
+# Use a imagem Nginx como imagem base
+FROM nginx:alpine
+
+# Copie os arquivos da build da aplicação Angular para o diretório de distribuição do Nginx
+COPY --from=0 /app/dist/Netflix /usr/share/nginx/html
+
+# Copie o arquivo de configuração do Nginx para o contêiner
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponha a porta 80 para o host
-EXPOSE 80
+# Copie o arquivo de autenticação para a pasta .well-known/pki-validation/
+#COPY well-known /usr/share/nginx/html/.well-known
 
+# Exponha a porta 80
+EXPOSE 80

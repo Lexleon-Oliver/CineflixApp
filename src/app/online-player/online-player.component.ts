@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
@@ -19,14 +19,12 @@ export class OnlinePlayerComponent implements OnInit{
 
   @Input() videoUrl: string | null = null;
   videoError: boolean = false;
-
   constructor(){
   }
 
   onError() {
     this.videoError = true;
   }
-
 
   ngOnInit(): void {
 

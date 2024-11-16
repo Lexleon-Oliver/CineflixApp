@@ -35,7 +35,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css"
             ],
             "scripts": [],
             "browser": "src/main.ts"

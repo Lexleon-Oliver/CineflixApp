@@ -47,7 +47,7 @@ export class RenderizaMidiaComponent implements OnInit{
 
   setNomeVideo() {
     if(this.filmeBanner.storage){
-      this.nomeVideo = this.filmeBanner.storage.split('\\').pop();
+      this.nomeVideo = this.filmeBanner.storage.split('/').pop();
       console.log("Nome do arquivo: ", this.nomeVideo);
 
     }
@@ -103,7 +103,7 @@ export class RenderizaMidiaComponent implements OnInit{
   }
 
   playVideo(filename: string) {
-    this.appService.setUrlMidia(`http://localhost:8080/api/stream?filename=${filename}`);
+    this.appService.setUrlMidia(`/api/stream?filename=${filename}`);
   }
 
   editar() {

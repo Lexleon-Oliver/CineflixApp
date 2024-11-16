@@ -2,7 +2,7 @@ import { User, UsersResponse } from './../users/user';
 import { Filme } from './../midias/filme';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, concatMap, filter, map, mapTo, Observable, of, Subject, take, takeWhile } from 'rxjs';
+import { BehaviorSubject, concatMap, EMPTY, expand, filter, map, mapTo, Observable, of, Subject, take, takeWhile, tap } from 'rxjs';
 import { Serie } from '../midias/serie';
 import { Season } from '../midias/season';
 import { Episode } from '../midias/episode';
@@ -16,10 +16,10 @@ export class AppService {
   private readonly LOCAL_STORAGE_NOVIDADES = 'CineflixNovidades';
   private readonly LOCAL_STORAGE_FILMES = 'CineflixFilmes';
   private readonly LOCAL_STORAGE_RECENTES = 'CineflixRecentes';
-  private readonly API = 'http://localhost:8080/api/users';
-  private readonly APIFILMES = 'http://localhost:8080/api/movies';
-  private readonly APISERIES = 'http://localhost:8080/api/series';
-  private readonly APIPLAYER= 'http://localhost:8080/api/player/play';
+  private readonly API = '/api/users';
+  private readonly APIFILMES = '/api/movies';
+  private readonly APISERIES = '/api/series';
+  private readonly APIPLAYER= '/api/player/play';
   private novidadesSubject = new BehaviorSubject<Filme[]>([]);
   private ultimosSubject = new BehaviorSubject<Filme[]>([]);
   private filmesSubject = new BehaviorSubject<Filme[]>([]);
@@ -197,15 +197,15 @@ export class AppService {
     let allFilmes: Filme[] = [];
 
     this.getFilmes(page).pipe(
-        concatMap(filmes => {
-            if (filmes.length === 0) return of([]);
-            allFilmes = allFilmes.concat(filmes);
-            this.filmesSubject.next(allFilmes); // Atualiza o BehaviorSubject
-            localStorage.setItem(this.LOCAL_STORAGE_FILMES, JSON.stringify(allFilmes)); // Atualiza o localStorage
-            page++;
-            return this.getFilmes(page);
-        }),
-        takeWhile(filmes => filmes.length > 0)
+      expand(filmes => filmes.length > 0 ? this.getFilmes(++page) : EMPTY), // Requisita até encontrar array vazio
+      takeWhile(filmes => filmes.length > 0, true), // Garante que o último array (vazio) seja emitido
+      tap(filmes => {
+          if (filmes.length > 0) {
+              allFilmes = allFilmes.concat(filmes); // Concatena os filmes
+              this.filmesSubject.next(allFilmes); // Atualiza o BehaviorSubject
+              localStorage.setItem(this.LOCAL_STORAGE_FILMES, JSON.stringify(allFilmes)); // Atualiza o localStorage
+          }
+      })
     ).subscribe({
         complete: () => {
           this.finishLoading();

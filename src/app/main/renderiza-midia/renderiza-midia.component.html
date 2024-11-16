@@ -51,8 +51,7 @@
           @if (rota !== 'NovoFilme') {
             <div class="btnContainer">
               <!-- @if (!ocultaBotaoAssistir) { -->
-                <button class="btn1"  (click)="abrirPlayer(filmeBanner)"><i class="fa-solid fa fa-play"></i><p>Assistir Offline</p></button>
-                <button class="btn5"  (click)="playVideo(nomeVideo)"><i class="fa-solid fa fa-play"></i><p>Assistir Online</p></button>
+                <button class="btn5"  (click)="playVideo(nomeVideo)"><i class="fa-solid fa fa-play"></i><p>Assistir</p></button>
               <!-- } -->
               <button class="btn2" (click)="avaliar()"><i class="far fa-star"></i><p>Avaliar</p></button>
               @if (id!==0) {
